@@ -12,7 +12,7 @@ class SortieController extends Controller
      */
     public function index()
     {
-        return $this->render('sortie/index.html.twig', [
+        return $this->render('sortie/home.html.twig', [
             'controller_name' => 'SortieController',
         ]);
     }

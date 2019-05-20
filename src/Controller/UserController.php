@@ -12,7 +12,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return $this->render('user/index.html.twig', [
+        return $this->render('user/home.html.twig', [
             'controller_name' => 'UserController',
         ]);
     }
