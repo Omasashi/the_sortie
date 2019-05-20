@@ -1,0 +1,99 @@
+body {
+position: relative;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+footer {
+
+    bottom: 0;
+    right: 0;
+    position: fixed;
+
+}
+
+.navbar {
+
+
+    background: rgba(190, 190, 190, 0.5);
+}
+
+.marge {
+
+    margin-bottom: 20px;
+}
+
+.marge1 {
+position: relative;
+    margin-top: 20px;
+}
+
+.DIV {
+    background: rgba(200, 200, 200, 0.3);
+}
+
+.PRANS {
+    background: rgba(204, 204, 204, 0);
+}
+
+.pied {
+    top: 0;
+    right: 0;
+    position: relative;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover
+}
+
+.image {
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+/*Sakura animation using WebGL. No images are used.
+ The framerate might be slow or the demo might not play at all in some
+  older systems so you can watch this video: http://www.screenr.com/BFZ8.
+  Let me make it clear that I did not make this and just thought
+   is was very cool and wanted to share it.
+*/
+
+ta{
+position: fixed;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover
+
+}
+
+canvas {
+    padding: 0;
+    margin: 0;
+}
+
+div.btnbg {
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-shadow: 0px 0px 15px #ccc;
+}
+
+div.btnbg:hover {
+    text-shadow: 0px 0px 3px #ccc;
+    box-shadow: 0px 0px 20px #ccc;
+}
+.cache{
+    display:none
+}
