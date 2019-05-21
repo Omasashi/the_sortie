@@ -4,7 +4,7 @@
     "require": {
         "php": "^7.0.8",
         "ext-iconv": "*",
-        "sensio/framework-extra-bundle": "^5.1",
+        "sensio/framework-extra-bundle": "^5.3",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "^3.4",
         "symfony/browser-kit": "^3.4",
