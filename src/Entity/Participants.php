@@ -45,7 +45,7 @@ class Participants implements UserInterface
     private $mail;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=250)
      */
     private $password;
 

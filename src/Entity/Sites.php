@@ -16,10 +16,7 @@ class Sites
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $no_site;
+
 
     /**
      * @ORM\Column(type="string", length=30)
@@ -31,17 +28,9 @@ class Sites
         return $this->id;
     }
 
-    public function getNoSite(): ?int
-    {
-        return $this->no_site;
-    }
 
-    public function setNoSite(int $no_site): self
-    {
-        $this->no_site = $no_site;
 
-        return $this;
-    }
+
 
     public function getNomSite(): ?string
     {

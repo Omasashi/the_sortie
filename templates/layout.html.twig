@@ -17,7 +17,7 @@
 </head>
 <body>
 <header id="tete">{% include('inc/nav.html.twig') %}</header>
-<main>{% for label,messages in app.flashes %}
+<main class="container">{% for label,messages in app.flashes %}
         {% for message in messages %}
             <div class="flash flash-danger marge marge1 DIV">
                 {{ message }}

@@ -10,11 +10,11 @@ class MainController extends Controller
 {
     /**
      * @Route("/",name="home")
-     * @Template()
      */
     public function home()
-    {
-        return ;
+    {$user=$this->getUser();
+        $date=date("d-m-Y");
+        return $this->render("main/home.html.twig",['date'=>$date,'user'=>$user]);
     }
     public  function test(){
 

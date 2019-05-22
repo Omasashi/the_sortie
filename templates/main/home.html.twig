@@ -1,5 +1,15 @@
 {% extends ('layout.html.twig') %}
- {%block title%}{{ parent() }} home{% endblock %}
+ {% block title %}{{ parent() }} home{% endblock %}
 {% block main %}
+    <div class="marge marge1 text-white">
+        <div class="row marge text-left text-white">
+            <div class="marge col-md-4 offset-md-8">Date du jour : {{ date }}</div>
+            <div class="marge col-md-4 offset-md-8">Paticipant : {{ user.prenom }}</div>
+        </div>
+        <div>
+            <div class="marge row"><h4>filtrer les sorties</h4></div>
+        </div>
+
+    </div>
 
 {% endblock %}
