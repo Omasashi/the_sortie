@@ -1,0 +1,22 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Login utilisateur | {{ parent() }}{% endblock %}
+
+{% block main %}
+   <div class="Div marge1 marge">
+       <h1>Login utilisateur</h1>
+       <form  method="post">
+          <div class="marge"> <label for="username">Email :</label></div>
+           <!--Symfony impose le nom _username pour gérer le mécanisme de login -->
+          <div class="marge"> <input type="text" name="_username" id="username"></div>
+
+           <div class="marge"><label for="password">Password :</label></div>
+           <!--Symfony impose le nom _password pour gérer le mécanisme de login -->
+           <div class="marge"><input type="password" name="_password" id="password"></div>
+
+          <div class="marge"> <button type="submit">Valider</button></div>
+
+       </form>
+   </div>
+
+{% endblock %}

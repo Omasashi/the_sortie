@@ -1,0 +1,9 @@
+{% extends ('layout.html.twig') %}
+ {%block title%}{{ parent() }} home{% endblock %}
+{% block main %}
+<div class="marge1 marge">
+ {{ form_start(userForm) }}
+ {{ form_widget(userForm.nom) }}
+ {{ form_end(userForm) }}
+</div>
+{% endblock %}

@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ParticipantsRepository")
  */
-class Participants
+class Participants implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -16,10 +17,7 @@ class Participants
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $no_participants;
+
 
     /**
      * @ORM\Column(type="string", length=30)
@@ -42,14 +40,14 @@ class Participants
     private $telephone;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=50)
      */
     private $mail;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $mot_de_passe;
+    private $password;
 
     /**
      * @ORM\Column(type="boolean")
@@ -60,23 +58,47 @@ class Participants
      * @ORM\Column(type="boolean")
      */
     private $actif;
+    /**
+     * @var pour l'autentification par d'entrée en base
+     */
+    private $roles;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $username;
+
+    /**
+     * @return pour $username
+     */
+    public function getUsername()
+    {
+        return $this->getMail();
+    }
+
+    /**
+     * @param
+     */
+    public function setUsername( $username)
+    {
+        $this->username = $username;
+    }
+
+    /**
+     * @return pour  $roles
+     */
+    public function getRoles()
+    {
+        return ["ROLE_USER"];
+    }
+
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNoParticipants(): ?int
-    {
-        return $this->no_participants;
-    }
-
-    public function setNoParticipants(int $no_participants): self
-    {
-        $this->no_participants = $no_participants;
-
-        return $this;
-    }
 
     public function getPseudo(): ?string
     {
@@ -138,17 +160,7 @@ class Participants
         return $this;
     }
 
-    public function getMotDePasse(): ?string
-    {
-        return $this->mot_de_passe;
-    }
 
-    public function setMotDePasse(string $mot_de_passe): self
-    {
-        $this->mot_de_passe = $mot_de_passe;
-
-        return $this;
-    }
 
     public function getAdministrateur(): ?bool
     {
@@ -172,5 +184,46 @@ class Participants
         $this->actif = $actif;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 }
