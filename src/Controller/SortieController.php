@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Serie;
+use App\Entity\Sites;
+use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,7 +16,9 @@ class SortieController extends Controller
     public function index()
     {
         return $this->render('sortie/home.html.twig', [
-            'controller_name' => 'SortieController',
+            'controller_name' => 'SortieController'
         ]);
     }
+
+
 }

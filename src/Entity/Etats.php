@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,6 +27,16 @@ class Etats
      * @ORM\Column(type="string", length=30)
      */
     private $libelle;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sorties", mappedBy="sortieEtat")
+     */
+    private $sortie;
+
+    public function __construct()
+    {
+        $this->sortie = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -51,6 +63,37 @@ class Etats
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sorties[]
+     */
+    public function getSortie(): Collection
+    {
+        return $this->sortie;
+    }
+
+    public function addSortie(Sorties $sortie): self
+    {
+        if (!$this->sortie->contains($sortie)) {
+            $this->sortie[] = $sortie;
+            $sortie->setSortieEtat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSortie(Sorties $sortie): self
+    {
+        if ($this->sortie->contains($sortie)) {
+            $this->sortie->removeElement($sortie);
+            // set the owning side to null (unless already changed)
+            if ($sortie->getSortieEtat() === $this) {
+                $sortie->setSortieEtat(null);
+            }
+        }
 
         return $this;
     }

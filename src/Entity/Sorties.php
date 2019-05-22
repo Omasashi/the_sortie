@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -65,6 +67,36 @@ class Sorties
      * @ORM\Column(type="integer")
      */
     private $organisateur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Lieux", inversedBy="noLieux")
+     */
+    private $sortie;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etats", inversedBy="sortie")
+     */
+    private $sortieEtat;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Sites", inversedBy="sortie")
+     */
+    private $sortieSite;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Inscriptions", mappedBy="sortie")
+     */
+    private $sortieIncription;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Participants", inversedBy="sortie")
+     */
+    private $sortieParticipant;
+
+    public function __construct()
+    {
+        $this->sortieIncription = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -187,6 +219,85 @@ class Sorties
     public function setOrganisateur(int $organisateur): self
     {
         $this->organisateur = $organisateur;
+
+        return $this;
+    }
+
+    public function getSortie(): ?Lieux
+    {
+        return $this->sortie;
+    }
+
+    public function setSortie(?Lieux $sortie): self
+    {
+        $this->sortie = $sortie;
+
+        return $this;
+    }
+
+    public function getSortieEtat(): ?Etats
+    {
+        return $this->sortieEtat;
+    }
+
+    public function setSortieEtat(?Etats $sortieEtat): self
+    {
+        $this->sortieEtat = $sortieEtat;
+
+        return $this;
+    }
+
+    public function getSortieSite(): ?Sites
+    {
+        return $this->sortieSite;
+    }
+
+    public function setSortieSite(?Sites $sortieSite): self
+    {
+        $this->sortieSite = $sortieSite;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Inscriptions[]
+     */
+    public function getSortieIncription(): Collection
+    {
+        return $this->sortieIncription;
+    }
+
+    public function addSortieIncription(Inscriptions $sortieIncription): self
+    {
+        if (!$this->sortieIncription->contains($sortieIncription)) {
+            $this->sortieIncription[] = $sortieIncription;
+            $sortieIncription->setSortie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSortieIncription(Inscriptions $sortieIncription): self
+    {
+        if ($this->sortieIncription->contains($sortieIncription)) {
+            $this->sortieIncription->removeElement($sortieIncription);
+            // set the owning side to null (unless already changed)
+            if ($sortieIncription->getSortie() === $this) {
+                $sortieIncription->setSortie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSortieParticipant(): ?Participants
+    {
+        return $this->sortieParticipant;
+    }
+
+    public function setSortieParticipant(?Participants $sortieParticipant): self
+    {
+        $this->sortieParticipant = $sortieParticipant;
 
         return $this;
     }

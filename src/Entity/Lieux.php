@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,10 +18,7 @@ class Lieux
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $no_lieu;
+
 
     /**
      * @ORM\Column(type="string", length=30)
@@ -41,23 +40,27 @@ class Lieux
      */
     private $longitude;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Villes", inversedBy="ville")
+     */
+    private $lieux;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sorties", mappedBy="sortie")
+     */
+    private $noLieux;
+
+    public function __construct()
+    {
+        $this->noLieux = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNoLieu(): ?int
-    {
-        return $this->no_lieu;
-    }
-
-    public function setNoLieu(int $no_lieu): self
-    {
-        $this->no_lieu = $no_lieu;
-
-        return $this;
-    }
-
+    
     public function getNomLieu(): ?string
     {
         return $this->nom_lieu;
@@ -102,6 +105,49 @@ class Lieux
     public function setLongitude(?float $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getLieux(): ?Villes
+    {
+        return $this->lieux;
+    }
+
+    public function setLieux(?Villes $lieux): self
+    {
+        $this->lieux = $lieux;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sorties[]
+     */
+    public function getNoLieux(): Collection
+    {
+        return $this->noLieux;
+    }
+
+    public function addNoLieux(Sorties $noLieux): self
+    {
+        if (!$this->noLieux->contains($noLieux)) {
+            $this->noLieux[] = $noLieux;
+            $noLieux->setSortie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNoLieux(Sorties $noLieux): self
+    {
+        if ($this->noLieux->contains($noLieux)) {
+            $this->noLieux->removeElement($noLieux);
+            // set the owning side to null (unless already changed)
+            if ($noLieux->getSortie() === $this) {
+                $noLieux->setSortie(null);
+            }
+        }
 
         return $this;
     }

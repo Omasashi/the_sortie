@@ -41,7 +41,7 @@ class UserController extends Controller
      * @Route("/userAdd",name="userAdd")
      */
     public function userAdd(EntityManagerInterface $em,Request $request){
-$this->denyAccessUnlessGranted("ROLE_USER");
+
 
 $user = new Participants();
 $user->setAdministrateur(false);

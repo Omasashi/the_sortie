@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -67,6 +69,27 @@ class Participants implements UserInterface
      * @ORM\Column(type="string", length=50)
      */
     private $username;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Sites", inversedBy="participant")
+     */
+    private $siteparticipant;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Inscriptions", mappedBy="paritcipant")
+     */
+    private $inscriptions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sorties", mappedBy="sortieParticipant")
+     */
+    private $sortie;
+
+    public function __construct()
+    {
+        $this->inscriptions = new ArrayCollection();
+        $this->sortie = new ArrayCollection();
+    }
 
     /**
      * @return pour $username
@@ -225,5 +248,76 @@ class Participants implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getSiteparticipant(): ?Sites
+    {
+        return $this->siteparticipant;
+    }
+
+    public function setSiteparticipant(?Sites $siteparticipant): self
+    {
+        $this->siteparticipant = $siteparticipant;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Inscriptions[]
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscriptions $inscription): self
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions[] = $inscription;
+            $inscription->addParitcipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscriptions $inscription): self
+    {
+        if ($this->inscriptions->contains($inscription)) {
+            $this->inscriptions->removeElement($inscription);
+            $inscription->removeParitcipant($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sorties[]
+     */
+    public function getSortie(): Collection
+    {
+        return $this->sortie;
+    }
+
+    public function addSortie(Sorties $sortie): self
+    {
+        if (!$this->sortie->contains($sortie)) {
+            $this->sortie[] = $sortie;
+            $sortie->setSortieParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSortie(Sorties $sortie): self
+    {
+        if ($this->sortie->contains($sortie)) {
+            $this->sortie->removeElement($sortie);
+            // set the owning side to null (unless already changed)
+            if ($sortie->getSortieParticipant() === $this) {
+                $sortie->setSortieParticipant(null);
+            }
+        }
+
+        return $this;
     }
 }
