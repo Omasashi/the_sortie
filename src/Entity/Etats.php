@@ -18,10 +18,7 @@ class Etats
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $no_etat;
+
 
     /**
      * @ORM\Column(type="string", length=30)
@@ -38,15 +35,6 @@ class Etats
         $this->sortie = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getNoEtat(): ?int
-    {
-        return $this->no_etat;
-    }
 
     public function setNoEtat(int $no_etat): self
     {

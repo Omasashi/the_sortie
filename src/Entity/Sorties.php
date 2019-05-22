@@ -18,10 +18,7 @@ class Sorties
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $no_sortie;
+
 
     /**
      * @ORM\Column(type="string", length=30)
