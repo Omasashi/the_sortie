@@ -23,8 +23,6 @@ class MainController extends Controller
         $date=date("d-m-Y");
         return $this->render("main/home.html.twig",['date'=>$date,'user'=>$user,'sites'=>$sites,]);
     }
-    public  function test(){
-
 }
 
 }
