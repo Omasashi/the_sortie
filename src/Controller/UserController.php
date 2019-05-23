@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Participants;
+use App\Entity\Sites;
+use App\Form\ModifierProfilType;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,14 +14,37 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends Controller
 {
     /**
-     * @Route("/user", name="user")
+     * @Route("/user/profil", name="profil")
      */
-    public function index()
+    public function profil()//int $id, EntityManagerInterface $em
     {
-        return $this->render('user/home.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
+        $sitesRepo=$this->getDoctrine()->getRepository(Sites::class);
+        $sites= $sitesRepo->findAll();
+        $user=$this->getUser();
+        return $this->render('user/profil.html.twig', ['user'=>$user,'sites'=>$sites,]);
     }
+
+    /**
+     * @Route("/user/modifer_profil", name="modifier_profil")
+     */
+    public function modifierProfil(Request $request, EntityManagerInterface $em)
+    {
+        $sitesRepo=$this->getDoctrine()->getRepository(Sites::class);
+        $sites= $sitesRepo->findAll();
+
+        $user=$this->getUser();
+        $modifierProfilForm = $this->createForm(ModifierProfilType::class, $user);
+        $modifierProfilForm->handleRequest($request);
+        if ($modifierProfilForm->isSubmitted()){
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash("success", "Modification réussie");
+            return $this->redirectToRoute("profil");
+        }
+
+        return $this->render('user/modifier_profil.html.twig', ['user'=>$user,'sites'=>$sites,"modifierProfilForm" => $modifierProfilForm->createView()]);
+    }
+
     /**
      * on nomme la route login car dans le fichier
      * security.yaml on a login_path: login

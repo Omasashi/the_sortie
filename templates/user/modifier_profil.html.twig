@@ -1,0 +1,74 @@
+{% extends ('layout.html.twig') %}
+ {% block title %}{{ parent() }} Modifier Profil {% endblock %}
+{% block main %}
+    <div class="DIV container">
+        <div class="row">
+            <div class="col-sm">
+                <div class="text-center my-5"><img src="{{ asset('css/image/user-solid.svg') }}" alt="profil"
+                                                   class="border rounded img-thumbnail" width="100px"></div>
+            </div>
+            <div class="col-sm">
+                {{ form_start(modifierProfilForm) }}
+                <div><h1 class="text-center">Mon profil</h1></div>
+                <div class="row">
+                    <div class="col-4">
+                        <label class="text-justify" for="">Pseudo : </label>
+                    </div>
+                    <div>
+                        {{ form_widget(modifierProfilForm.pseudo) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label class="text-justify" for="">Nom : </label>
+                    </div>
+                    <div>
+                        {{ form_widget(modifierProfilForm.nom) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label class="text-justify" for="">Prénom : </label>
+                    </div>
+                    <div>
+                        {{ form_widget(modifierProfilForm.prenom) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label class="text-justify" for="">Téléphone : </label>
+                    </div>
+                    <div>
+                        {{ form_widget(modifierProfilForm.telephone) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label class="text-justify" for="">Mail : </label>
+                    </div>
+                    <div>
+                        {{ form_widget(modifierProfilForm.mail) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label class="text-justify" for="">Password : </label>
+                    </div>
+                    <div>
+                        {{ form_widget(modifierProfilForm.password) }}
+                    </div>
+                </div>
+                    <div class="text-center"><input class="btn btn-dark mx-2 my-5" href="" type="submit"
+                                                    value="Enregistrer">
+                        <a class="btn btn-dark mx-2 my-5" href="{{ path('profil') }}" role="button">Annuler</a>
+                    </div>
+
+                {{ form_end(modifierProfilForm) }}
+            </div>
+            <div class="col-sm">
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
