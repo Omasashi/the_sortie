@@ -24,5 +24,3 @@ class MainController extends Controller
         return $this->render("main/home.html.twig",['date'=>$date,'user'=>$user,'sites'=>$sites,]);
     }
 }
-
-}
