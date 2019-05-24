@@ -32,7 +32,6 @@ class UserType extends AbstractType
                 'label'=>false
             ],['attr'=>['placeholder'=>'Password']])
 
-
         ;
     }
 

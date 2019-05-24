@@ -1,0 +1,25 @@
+{% extends ('layout.html.twig') %}
+ {% block title %}{{ parent() }} Profil {% endblock %}
+{% block main %}
+    <div class="DIV container">
+        <div class="row">
+            <div class="col-sm">
+                <div class="text-center my-5"><img src="{{ asset('css/image/user-solid.svg') }}" alt="profil" class="border rounded img-thumbnail" width="100px"></div>
+            </div>
+            <div class="col-sm">
+                <div><h1 class="text-center">{{ user.pseudo }}</h1></div>
+                <div><label class="text-center" for="">Prénom : {{ user.prenom }}</label></div>
+                <div><label class="text-center" for="">Nom : {{ user.nom }}</label></div>
+                <div><label class="text-center" for="">Téléphone : {{ user.telephone }}</label></div>
+                <div><label class="text-center" for="">Email : {{ user.mail }}</label></div>
+                <div><label class="text-center" for="">Ville de rattachement : </label></div>
+                <div class="text-center"><a class="btn btn-dark mx-2 my-5" href="{{ path('home') }}" role="button">Retour</a>
+                    <a class="btn btn-dark mx-2 my-5" href="{{ path('modifier_profil') }}" role="button">Modifier Profil</a></div>
+            </div>
+            <div class="col-sm">
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
