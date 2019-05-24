@@ -1,14 +1,53 @@
 {% extends ('layout.html.twig') %}
  {% block title %}{{ parent() }} home{% endblock %}
 {% block main %}
-    <div class="marge-bottom marge1 text-white">
-        <div class="row marge-bottom text-left text-white">
-            <div class="marge-bottom col-md-4 offset-md-8">Date du jour : {{ date }}</div>
-            <div class="marge-bottom col-md-4 offset-md-8">Paticipant : {{ user.prenom }}</div>
-        </div>
-        <div>
-            <div class="marge-bottom row"><h4>filtrer les sorties</h4></div>
-            <div></div>
+    <div class="marge-bottom marge-top text-white DIV container">
+        <div class="TRANS marge-bottom marge-top">
+            <div class="row container text-left text-white">
+                <div class="marge-bottom col-md-4 offset-md-8">Date du jour : {{ date }}</div>
+                <div class="marge-bottom col-md-4 offset-md-8">Paticipant : {{ user.prenom }}</div>
+            </div>
+            <div>
+                <div class="marge-bottom row"><h4>filtrer les sorties</h4></div>
+                <div></div>
+            </div>
+            <div id="table-wrapper">
+                <div id="table-scroll">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Nom de la sortie</th>
+                            <th scope="col">Date de la Sortie</th>
+                            <th scope="col">Clôture</th>
+                            <th scope="col">inscrits/places</th>
+                            <th scope="col">Etat</th>
+                            <th scope="col">inscrit</th>
+                            <th scope="col">Organisateur</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for  sortie in sorties %}
+                            <tr>
+                                <th scope="row">{{ sortie.nom }}</th>
+                                <td>{{ sortie.dateDebut |date('d/m/Y') }}</td>
+                                <td>{{ sortie.dateCloture |date('d/m/Y')}}</td>
+                                <td>{{ sortie.sortieIncription |length }}/{{ sortie.maxInscriptions }}</td>
+                                <td>{{ sortie.sortieEtat.libelle }}</td>
+                                <td> {% if sortie.sortieIncription.contains(app.user) %}
+                                        <h4><strong>X</strong></h4>
+
+                                    {% else %}
+
+                                    {% endif %}</td>
+                                <td>{{ sortie.sortieParticipant.pseudo }}</td>
+                                <td></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
     </div>

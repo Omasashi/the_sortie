@@ -29,7 +29,7 @@ class Inscriptions
     private $paritcipant;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Sorties", inversedBy="sortieIncription")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Sorties", mappedBy="sortieIncription")
      */
     private $sortie;
 

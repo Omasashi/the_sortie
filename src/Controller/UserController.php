@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends Controller
 {
+   
     /**
      * @Route("/user/profil", name="profil")
      */

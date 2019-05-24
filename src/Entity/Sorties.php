@@ -28,7 +28,7 @@ class Sorties
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date_debut;
+    private $dateDebut;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -38,27 +38,28 @@ class Sorties
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date_cloture;
+    private $dateCloture;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $max_inscriptions;
+    private $maxInscriptions;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $infos_descriptions;
+    private $infosescriptions;
+
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $etat_sortie;
+    private $etatSortie;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $url_photo;
+    private $urlPhoto;
 
     /**
      * @ORM\Column(type="integer")
@@ -81,7 +82,7 @@ class Sorties
     private $sortieSite;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Inscriptions", mappedBy="sortie")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Inscriptions", inversedBy="sortie")
      */
     private $sortieIncription;
 
@@ -90,179 +91,249 @@ class Sorties
      */
     private $sortieParticipant;
 
-    public function __construct()
-    {
-        $this->sortieIncription = new ArrayCollection();
-    }
-
-    public function getId(): ?int
+    /**
+     * @return mixed
+     */
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getNoSortie(): ?int
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
     {
-        return $this->no_sortie;
+        $this->id = $id;
     }
 
-    public function setNoSortie(int $no_sortie): self
-    {
-        $this->no_sortie = $no_sortie;
-
-        return $this;
-    }
-
-    public function getNom(): ?string
+    /**
+     * @return mixed
+     */
+    public function getNom()
     {
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    /**
+     * @param mixed $nom
+     */
+    public function setNom($nom)
     {
         $this->nom = $nom;
-
-        return $this;
     }
 
-    public function getDateDebut(): ?\DateTimeInterface
+    /**
+     * @return mixed
+     */
+    public function getDateDebut()
     {
-        return $this->date_debut;
+        return $this->dateDebut;
     }
 
-    public function setDateDebut(\DateTimeInterface $date_debut): self
+    /**
+     * @param mixed $dateDebut
+     */
+    public function setDateDebut($dateDebut)
     {
-        $this->date_debut = $date_debut;
-
-        return $this;
+        $this->dateDebut = $dateDebut;
     }
 
-    public function getDuree(): ?int
+    /**
+     * @return mixed
+     */
+    public function getDuree()
     {
         return $this->duree;
     }
 
-    public function setDuree(?int $duree): self
+    /**
+     * @param mixed $duree
+     */
+    public function setDuree($duree)
     {
         $this->duree = $duree;
-
-        return $this;
     }
 
-    public function getDateCloture(): ?\DateTimeInterface
+    /**
+     * @return mixed
+     */
+    public function getDateCloture()
     {
-        return $this->date_cloture;
+        return $this->dateCloture;
     }
 
-    public function setDateCloture(\DateTimeInterface $date_cloture): self
+    /**
+     * @param mixed $dateCloture
+     */
+    public function setDateCloture($dateCloture)
     {
-        $this->date_cloture = $date_cloture;
-
-        return $this;
+        $this->dateCloture = $dateCloture;
     }
 
-    public function getMaxInscriptions(): ?int
+    /**
+     * @return mixed
+     */
+    public function getMaxInscriptions()
     {
-        return $this->max_inscriptions;
+        return $this->maxInscriptions;
     }
 
-    public function setMaxInscriptions(int $max_inscriptions): self
+    /**
+     * @param mixed $maxInscriptions
+     */
+    public function setMaxInscriptions($maxInscriptions)
     {
-        $this->max_inscriptions = $max_inscriptions;
-
-        return $this;
+        $this->maxInscriptions = $maxInscriptions;
     }
 
-    public function getInfosDescriptions(): ?string
+    /**
+     * @return mixed
+     */
+    public function getInfosescriptions()
     {
-        return $this->infos_descriptions;
+        return $this->infosescriptions;
     }
 
-    public function setInfosDescriptions(?string $infos_descriptions): self
+    /**
+     * @param mixed $infosescriptions
+     */
+    public function setInfosescriptions($infosescriptions)
     {
-        $this->infos_descriptions = $infos_descriptions;
-
-        return $this;
+        $this->infosescriptions = $infosescriptions;
     }
 
-    public function getEtatSortie(): ?int
+    /**
+     * @return mixed
+     */
+    public function getInfosDescriptions()
     {
-        return $this->etat_sortie;
+        return $this->infosDescriptions;
     }
 
-    public function setEtatSortie(?int $etat_sortie): self
+    /**
+     * @param mixed $infosDescriptions
+     */
+    public function setInfosDescriptions($infosDescriptions)
     {
-        $this->etat_sortie = $etat_sortie;
-
-        return $this;
+        $this->infosDescriptions = $infosDescriptions;
     }
 
-    public function getUrlPhoto(): ?string
+    /**
+     * @return mixed
+     */
+    public function getEtatSortie()
     {
-        return $this->url_photo;
+        return $this->etatSortie;
     }
 
-    public function setUrlPhoto(?string $url_photo): self
+    /**
+     * @param mixed $etatSortie
+     */
+    public function setEtatSortie($etatSortie)
     {
-        $this->url_photo = $url_photo;
-
-        return $this;
+        $this->etatSortie = $etatSortie;
     }
 
-    public function getOrganisateur(): ?int
+    /**
+     * @return mixed
+     */
+    public function getUrlPhoto()
+    {
+        return $this->urlPhoto;
+    }
+
+    /**
+     * @param mixed $urlPhoto
+     */
+    public function setUrlPhoto($urlPhoto)
+    {
+        $this->urlPhoto = $urlPhoto;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrganisateur()
     {
         return $this->organisateur;
     }
 
-    public function setOrganisateur(int $organisateur): self
+    /**
+     * @param mixed $organisateur
+     */
+    public function setOrganisateur($organisateur)
     {
         $this->organisateur = $organisateur;
-
-        return $this;
     }
 
-    public function getSortie(): ?Lieux
+    /**
+     * @return mixed
+     */
+    public function getSortie()
     {
         return $this->sortie;
     }
 
-    public function setSortie(?Lieux $sortie): self
+    /**
+     * @param mixed $sortie
+     */
+    public function setSortie($sortie)
     {
         $this->sortie = $sortie;
-
-        return $this;
     }
 
-    public function getSortieEtat(): ?Etats
+    /**
+     * @return mixed
+     */
+    public function getSortieEtat()
     {
         return $this->sortieEtat;
     }
 
-    public function setSortieEtat(?Etats $sortieEtat): self
+    /**
+     * @param mixed $sortieEtat
+     */
+    public function setSortieEtat($sortieEtat)
     {
         $this->sortieEtat = $sortieEtat;
-
-        return $this;
     }
 
-    public function getSortieSite(): ?Sites
+    /**
+     * @return mixed
+     */
+    public function getSortieSite()
     {
         return $this->sortieSite;
     }
 
-    public function setSortieSite(?Sites $sortieSite): self
+    /**
+     * @param mixed $sortieSite
+     */
+    public function setSortieSite($sortieSite)
     {
         $this->sortieSite = $sortieSite;
-
-        return $this;
     }
 
     /**
-     * @return Collection|Inscriptions[]
+     * @return mixed
      */
-    public function getSortieIncription(): Collection
+    public function getSortieIncription()
     {
         return $this->sortieIncription;
     }
+
+    /**
+     * @param mixed $sortieIncription
+     */
+    public function setSortieIncription($sortieIncription)
+    {
+        $this->sortieIncription = $sortieIncription;
+    }
+
+
+
+
 
     public function addSortieIncription(Inscriptions $sortieIncription): self
     {
