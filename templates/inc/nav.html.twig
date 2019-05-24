@@ -1,15 +1,15 @@
 
 <nav class="navbar navbar-expand-lg navbar-light ">
 
-    <a class="nav-link " href="{{ path('home') }}"> <img src="css/image/walking-solid.svg" width="50px"></a>
+    <a class="nav-link " href="{{ path('home') }}"> <img src="{{ asset('css/image/walking-solid.svg') }}" width="50px"></a>
     <br>
     <h3 class="text-light">Sortie.com</h3>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+    <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse right" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav ">
             <li class="nav-item active">
                 <a class="nav-link text-light" href="">Ville<span
                             class="sr-only">(current)</span></a>
@@ -23,15 +23,13 @@
                             class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link text-light" href="">Mon profil<span
+                <a class="nav-link text-light" href="{{ path('profil') }}">Mon profil<span
                             class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link text-light" href="">Se déconnecter<span
                             class="sr-only">(current)</span></a>
             </li>
-
-
         </ul>
     </div>
 </nav>

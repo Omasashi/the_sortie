@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ParticipantsRepository")
@@ -19,9 +20,15 @@ class Participants implements UserInterface
      */
     private $id;
 
-
-
     /**
+     * @Assert\NotBlank(message="Renseignez le pseudo")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Your idea must be at least {{ limit }} characters long",
+     *      maxMessage = "Your idea cannot be longer than {{ limit }} characters"
+     * )
+     *
      * @ORM\Column(type="string", length=30)
      */
     private $pseudo;
