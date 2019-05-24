@@ -82,7 +82,7 @@ class Sorties
     private $sortieSite;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Inscriptions", inversedBy="sortie")
+     * @ORM\OneToMany(targetEntity="App\Entity\Inscriptions", mappedBy="sortie")
      */
     private $sortieIncription;
 
