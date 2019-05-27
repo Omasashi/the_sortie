@@ -2,27 +2,35 @@
 
 namespace App\Form;
 
+use App\Entity\Lieux;
 use App\Entity\Sorties;
+
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToArrayTransformer;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class SortieType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom')
-            ->add('dateDebut')
-            ->add('duree')
-            ->add('dateCloture')
-            ->add('maxInscriptions')
-            ->add('infosescriptions')
-
-
-
-
-        ;
+            ->add('nom', TextType::class, ['attr' => ['placeholder' => 'Nom de la sortie', 'label' => false]])
+            ->add('dateDebut', DateType::class, ['attr' => ['placeholder' => 'Date de début', 'label' => false], 'widget' => 'single_text'])
+            ->add('duree', NumberType::class, ['attr' => ['placeholder' => 'Durée', 'label' => false]])
+            ->add('dateCloture', DateType::class, ['attr' => ['placeholder' => 'Date de cloturation', 'label' => false], 'widget' => 'single_text'])
+            ->add('maxInscriptions', NumberType::class, ['attr' => ['placeholder' => 'Nombre maxi de participant(s)', 'label' => false]])
+            ->add('infosescriptions', TextType::class, ['attr' => ['placeholder' => 'Descriptiion de la sortie', 'label' => false]])
+            ->add('sortie', EntityType::class, ['class' => Lieux::class, 'choice_label' => 'nom_lieu'])
+            ->add('Enregistrer', SubmitType::class, [
+                'attr' => ['class' => 'class="btn btn-outline-primary col-12"'],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

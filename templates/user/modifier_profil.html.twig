@@ -1,7 +1,7 @@
 {% extends ('layout.html.twig') %}
  {% block title %}{{ parent() }} Modifier Profil {% endblock %}
 {% block main %}
-    <div class="DIV container">
+    <div class="DIV container text-white">
         <div class="row">
             <div class="col-sm">
                 <div class="text-center my-5"><img src="{{ asset('css/image/user-solid.svg') }}" alt="profil"
@@ -51,9 +51,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-4">
-                        <label class="text-justify" for="">Password : </label>
-                    </div>
+                    
                     <div>
                         {{ form_widget(modifierProfilForm.password) }}
                     </div>

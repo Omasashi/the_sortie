@@ -33,15 +33,16 @@
                                 <td>{{ sortie.dateDebut |date('d/m/Y') }}</td>
                                 <td>{{ sortie.dateCloture |date('d/m/Y')}}</td>
                                 <td>{{ sortie.sortieIncription |length }}/{{ sortie.maxInscriptions }}</td>
-                                <td>{{ sortie.sortieEtat.libelle }}</td>
-                                <td> {% if sortie.sortieIncription.contains(app.user) %}
-                                        <h4><strong>X</strong></h4>
+                                <td>{{ sortie.sortieEtat.libelle}}</td>
+                                <td> {% if sortie.sortieParticipant == (app.User) %}
+                                        <h4 class="text-center"><strong> X</strong></h4>
 
                                     {% else %}
-
+                                        <strong><u>Vous n'êtes pas inscris.{% if sortie.sortieIncription |length >=sortie.maxInscriptions %}
+                                        {%else  %} Inscrivez-vous {% endif %}</u></strong>
                                     {% endif %}</td>
                                 <td>{{ sortie.sortieParticipant.pseudo }}</td>
-                                <td></td>
+                                <td><a href="{{ path('afficheSortie',{'id':sortie.id}) }}">Afficher</a></td>
                             </tr>
                         {% endfor %}
                         </tbody>
