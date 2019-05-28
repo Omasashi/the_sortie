@@ -1,5 +1,5 @@
 {% extends ('layout.html.twig') %}
- {% block title %}{{ parent() }} home{% endblock %}
+ {% block title %}{{ parent() }} Afficher Sortie{% endblock %}
 {% block main %}
     <div class="marge-bottom marge-top DIV text-white container">
 
@@ -40,36 +40,36 @@
             <div class="col-2">{{ sortie.sortie.longitude }}</div>
         </div>
     </div>
-    <div id="table-wrapper">
-        <div id="table-scroll">
-            <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">Pseudo</th>
-                    <th scope="col">Nom</th>
+    {#  <div id="table-wrapper">
+         <div id="table-scroll">
+             <table class="table table-bordered table-striped">
+                 <thead>
+                 <tr>
+                     <th scope="col">Pseudo</th>
+                     <th scope="col">Nom</th>
 
-                </tr>
-                </thead>
-                <tbody>
+                 </tr>
+                 </thead>
+                 <tbody>
                 {% for  sortie in sorties %}
-                    <tr>
-                        <th scope="row">{{ sortie.nom }}</th>
+                     <tr>
+                         <th scope="row">{{ sortie.nom }}</th>
 
-                        <td> {% if sortie.sortieParticipant == (app.User) %}
-                                <h4 class="text-center"><strong> X</strong></h4>
+                         <td> {% if sortie.sortieParticipant == (app.User) %}
+                                 <h4 class="text-center"><strong> X</strong></h4>
 
-                            {% else %}
-                                <strong><u>Vous n'êtes pas inscris.{% if sortie.sortieIncription |length >=sortie.maxInscriptions %}
-                                    {%else  %} Inscrivez-vous {% endif %}</u></strong>
-                            {% endif %}</td>
-                        <td>{{ sortie.sortieParticipant.pseudo }}</td>
-                        <td><a href="{{ path('afficheSortie',{'id':sortie.id}) }}">Afficher</a></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-    </div>
-    </div>
+                             {% else %}
+                                 <strong><u>Vous n'êtes pas inscris.{% if sortie.sortieIncription |length >=sortie.maxInscriptions %}
+                                     {%else  %} Inscrivez-vous {% endif %}</u></strong>
+                             {% endif %}</td>
+                         <td>{{ sortie.sortieParticipant.pseudo }}</td>
+                         <td><a href="{{ path('afficheSortie',{'id':sortie.id}) }}">Afficher</a></td>
+                     </tr>
+                 {% endfor %}
+                 </tbody>
+             </table>
+         </div>
+     </div>
+     </div>
+    </div>#}
 {% endblock %}

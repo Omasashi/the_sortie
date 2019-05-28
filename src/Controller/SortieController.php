@@ -66,9 +66,19 @@ class SortieController extends Controller
         $sortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
         $sortie = $sortieRepo->find($id);
 
-
-        dump($sortie);
         return $this->render('sortie/affiche_sortie.html.twig', ['sortie' => $sortie]);
     }
 
+
+    /**
+     * @Route("/modifierSortie/{id}", name="modifieSortie")
+     */
+    public function modifieSortie($id, Request $request){
+
+        $sortie = new Sorties();
+        $sortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
+        $sortie = $sortieRepo->find($id);
+
+        return $this->render('sortie/modifier_sortie.html.twig', ['sortie' => $sortie]);
+    }
 }
