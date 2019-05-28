@@ -8,6 +8,31 @@
                 <div class="marge-bottom col-md-4 offset-md-8">Paticipant : {{ user.prenom }}</div>
             </div>
             <div>
+                <div class="marge-bottom">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="marge-bottom">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+                    </div>
+                </div>
+            </div>
+            <div>
                 <div class="marge-bottom row"><h4>filtrer les sorties</h4></div>
                 <div></div>
             </div>
@@ -31,18 +56,19 @@
                             <tr>
                                 <th scope="row">{{ sortie.nom }}</th>
                                 <td>{{ sortie.dateDebut |date('d/m/Y') }}</td>
-                                <td>{{ sortie.dateCloture |date('d/m/Y')}}</td>
+                                <td>{{ sortie.dateCloture |date('d/m/Y') }}</td>
                                 <td>{{ sortie.sortieIncription |length }}/{{ sortie.maxInscriptions }}</td>
-                                <td>{{ sortie.sortieEtat.libelle}}</td>
+                                <td>{{ sortie.sortieEtat.libelle }}</td>
                                 <td> {% if sortie.sortieParticipant == (app.User) %}
                                         <h4 class="text-center"><strong> X</strong></h4>
 
                                     {% else %}
-                                        <strong><u>Vous n'êtes pas inscris.{% if sortie.sortieIncription |length >=sortie.maxInscriptions %}
-                                        {%else  %} Inscrivez-vous {% endif %}</u></strong>
+                                        <strong><u>Vous n'êtes pas
+                                                inscris.{% if sortie.sortieIncription |length >=sortie.maxInscriptions %}
+                                            {% else %} Inscrivez-vous {% endif %}</u></strong>
                                     {% endif %}</td>
                                 <td>{{ sortie.sortieParticipant.pseudo }}</td>
-                                <td><a href="{{ path('afficheSortie',{'id':sortie.id}) }}">Afficher</a></td>
+                                <td><a href="{{ path('afficheSortie',{'id':sortie.id}) }}">Afficher <br>{% if sortie.organisateur==(app.User.id) %}<a href=""> Modifer</a>{% endif %}</a></td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -50,7 +76,7 @@
                 </div>
             </div>
         </div>
-        <a href="{{ path('createSortie') }}"class="btn btn-outline-primary">Créer une sortie</a>
+        <a href="{{ path('createSortie') }}" class="btn btn-outline-primary">Créer une sortie</a>
     </div>
 
 {% endblock %}
