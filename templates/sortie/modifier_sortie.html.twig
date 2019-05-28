@@ -1,5 +1,71 @@
 {% extends ('layout.html.twig') %}
  {% block title %}{{ parent() }} Modifier Sortie{% endblock %}
 {% block main %}
+ <div class="container text-white DIV marge-bottom marge-top">
+  {{ form_start(modifierSortieForm) }}
+  <div class="row marge-bottom marge-top">
+   <div class="col-2"><label for=""><u>Nom de la sortie</u></label></div>
+   <div class="col-3">{{ form_widget(modifierSortieForm.nom) }}</div>
+   <div class="col-2 offset-md-1 "><label for=""><u>ville organisatrice</u></label></div>
+   <div class="col-3"><label for="">{{ site }}</label></div>
 
+  </div>
+
+  <div class="row marge-bottom">
+   <div class="col-2"><label for=""><u>Date de debut de la sortie</u></label></div>
+   <div class="col-3">{{ form_widget(modifierSortieForm.dateDebut) }}</div>
+   <div class=" col-2 offset-md-1"><label for=""><u>ville</u></label></div>
+   <div class="col-3"><select id="ville"name="ville">
+     <option value="">--Choix d'une ville--</option>
+     {%for ville in villes%}
+      <option value="{{ ville.id }}">{{ ville.getNomVille() }}</option>
+     {% endfor %}
+    </select></div>
+
+  </div>
+
+  <div class="row marge-bottom">
+   <div class="col-2"><label for=""><u>Durée de la sortie</u></label></div>
+   <div class="col-3">{{ form_widget(modifierSortieForm.duree) }}</div>
+   <div class="col-2 offset-md-1"><label for="">Lieux</label></div>
+   <div class="col-3">{{ form_widget(modifierSortieForm.sortie) }}</div>
+  </div>
+
+  <div class="row marge-bottom">
+   <div class="col-2"><label for=""><u>Date de cloturaion</u></label></div>
+   <div class="col-3"> {{ form_widget(modifierSortieForm.dateCloture) }}</div>
+   <div><label for=""></label></div>
+   <div></div>
+  </div>
+
+  <div class="row marge-bottom">
+   <div class="col-2"><label for=""><u>Nom max d'instription</u></label></div>
+   <div class="col-3">{{ form_widget(modifierSortieForm.maxInscriptions) }}</div>
+   <div><label for=""></label></div>
+   <div></div>
+  </div>
+
+  <div class="row marge-bottom">
+   <div class="col-2 "><label for=""><u>Description de la sortie</u></label></div>
+   <div class="col-3">{{ form_widget(modifierSortieForm.infosescriptions) }}</div>
+   <div><label for=""></label></div>
+   <div></div>
+  </div>
+
+
+  <div class="row marge-bottom">
+   <div class="col-2 offset-md-2">
+    {{ form_widget(modifierSortieForm.Enregistrer) }}
+   </div>
+   <div class="col-2 offset-md-2">
+    {{ form_widget(modifierSortieForm.Supprimer) }}
+   </div>
+   <div class="offset-md-2 col2 ">
+    <button class="btn btn-outline-primary col-12" name="publier" type="submit">Publier la sortie</button>
+   </div>
+   <div class="col-2 offset-md-2">
+    <button class="btn btn-outline-primary col-12" type="reset"><a href="{{ path('home') }}">Annuler</a></button>
+   </div>
+  </div>
+  {{ form_end(modifierSortieForm) }}</div>
 {% endblock %}
