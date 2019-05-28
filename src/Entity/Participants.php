@@ -83,7 +83,7 @@ class Participants implements UserInterface
     private $siteparticipant;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Inscriptions", mappedBy="paritcipant")
+     * @ORM\OneToOne(targetEntity="App\Entity\Inscriptions", inversedBy="paritcipant")
      */
     private $inscriptions;
 

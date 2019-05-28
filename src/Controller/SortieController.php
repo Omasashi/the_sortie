@@ -65,10 +65,12 @@ class SortieController extends Controller
         $sortie = new Sorties();
         $sortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
         $sortie = $sortieRepo->find($id);
+        $allSortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
+        $allSortie = $allSortieRepo->findAll();
 
 
         dump($sortie);
-        return $this->render('sortie/affiche_sortie.html.twig', ['sortie' => $sortie]);
+        return $this->render('sortie/affiche_sortie.html.twig', ['sortie' => $sortie,'allSortie'=>$allSortie]);
     }
 
 }

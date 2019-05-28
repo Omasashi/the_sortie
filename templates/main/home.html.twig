@@ -7,35 +7,55 @@
                 <div class="marge-bottom col-md-4 offset-md-8">Date du jour : {{ date }}</div>
                 <div class="marge-bottom col-md-4 offset-md-8">Paticipant : {{ user.prenom }}</div>
             </div>
-            <div>
-                <div class="marge-bottom">
-                    <div></div>
-                    <div></div>
-                    <div></div>
+
+            <div class="marge-bottom row container"><h4>filtrer les sorties</h4></div>
+            <form action="">
+
+                <div class="row">
+
+                    <div class="marge-bottom col-4">
+                        <div>
+                            <div><label for="">Site</label></div>
+                            <div><select id="pet-select">
+                                    {% for  site  in sites %}
+                                        <option value="{{ site.id }}">{{ site.nomSite }}</option>
+                                    {% endfor %}
+                                </select></div>
+                        </div>
+                        <div>
+                            <div><label for="">Le nopm de la sortie contient</label></div>
+                            <div><input name="like" type="text"></div>
+                        </div>
+                        <div>
+                            <div><label for="">Entre</label></div><div><input type="date"></div><div><label for="">et</label></div>
+                            <div><input type="date"></div>
+                        </div>
+                    </div>
+                    <div class="marge-bottom col-4">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="organisateur" name="organisateur">
+                            <label class="custom-control-label" for="organisateur">Sortie dont je suis
+                                l'organisateur</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="inscrit" name="inscrit">
+                            <label class="custom-control-label" for="inscrit">Sortie auxquelles je suis
+                                inscrit(e).</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="pasInscrit" name="pasInscrit">
+                            <label class="custom-control-label" for="pasInscrit">Sortie auxquelles je ne suis pas
+                                inscrit(e).</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="passees" name="passees">
+                            <label class="custom-control-label" for="passees">Sortie passées.</label>
+                        </div>
+                    </div>
+                    <div class="col-3"><input type="submit" class="btn btn-outline-primary " value="Rechercher"></div>
                 </div>
-                <div class="marge-bottom">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                        <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                        <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                        <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                        <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="marge-bottom row"><h4>filtrer les sorties</h4></div>
-                <div></div>
-            </div>
+            </form>
+
             <div id="table-wrapper">
                 <div id="table-scroll">
                     <table class="table table-bordered table-striped">
@@ -68,7 +88,9 @@
                                             {% else %} Inscrivez-vous {% endif %}</u></strong>
                                     {% endif %}</td>
                                 <td>{{ sortie.sortieParticipant.pseudo }}</td>
-                                <td><a href="{{ path('afficheSortie',{'id':sortie.id}) }}">Afficher <br>{% if sortie.organisateur==(app.User.id) %}<a href=""> Modifer</a>{% endif %}</a></td>
+                                <td><a href="{{ path('afficheSortie',{'id':sortie.id}) }}">Afficher
+                                        <br>{% if sortie.organisateur==(app.User.id) %}<a href="">
+                                            Modifer</a>{% endif %}</a></td>
                             </tr>
                         {% endfor %}
                         </tbody>
