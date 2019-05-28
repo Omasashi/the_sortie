@@ -24,7 +24,7 @@ class Inscriptions
     private $date_inscription;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Participants", inversedBy="inscriptions")
+     * @ORM\OneToOne(targetEntity="App\Entity\Participants", inversedBy="inscriptions")
      */
     private $paritcipant;
 

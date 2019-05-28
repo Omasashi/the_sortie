@@ -6,17 +6,17 @@
         {{ form_start(sortieForm) }}
         <div class="row marge-bottom marge-top">
             <div class="col-2"><label for=""><u>Nom de la sortie</u></label></div>
-            <div class="col-2">{{ form_widget(sortieForm.nom) }}</div>
+            <div class="col-3">{{ form_widget(sortieForm.nom) }}</div>
             <div class="col-2 offset-md-1 "><label for=""><u>ville organisatrice</u></label></div>
-            <div class="col-4"><label for="">{{ site }}</label></div>
+            <div class="col-3"><label for="">{{ site }}</label></div>
 
         </div>
 
         <div class="row marge-bottom">
             <div class="col-2"><label for=""><u>Date de debut de la sortie</u></label></div>
-            <div class="col-2">{{ form_widget(sortieForm.dateDebut) }}</div>
+            <div class="col-3">{{ form_widget(sortieForm.dateDebut) }}</div>
             <div class=" col-2 offset-md-1"><label for=""><u>ville</u></label></div>
-            <div class="col-4"><select id="ville"name="ville">
+            <div class="col-3"><select id="ville"name="ville">
                     <option value="">--Choix d'une ville--</option>
                     {%for ville in villes%}
                     <option value="{{ ville.id }}">{{ ville.getNomVille() }}</option>
@@ -27,28 +27,28 @@
 
         <div class="row marge-bottom">
             <div class="col-2"><label for=""><u>Durée de la sortie</u></label></div>
-            <div class="col-2">{{ form_widget(sortieForm.duree) }}</div>
+            <div class="col-3">{{ form_widget(sortieForm.duree) }}</div>
             <div class="col-2 offset-md-1"><label for="">Lieux</label></div>
-            <div class="col-4">{{ form_widget(sortieForm.sortie) }}</div>
+            <div class="col-3">{{ form_widget(sortieForm.sortie) }}</div>
         </div>
 
         <div class="row marge-bottom">
             <div class="col-2"><label for=""><u>Date de cloturaion</u></label></div>
-            <div class="col-2"> {{ form_widget(sortieForm.dateCloture) }}</div>
+            <div class="col-3"> {{ form_widget(sortieForm.dateCloture) }}</div>
             <div><label for=""></label></div>
             <div></div>
         </div>
 
         <div class="row marge-bottom">
             <div class="col-2"><label for=""><u>Nom max d'instription</u></label></div>
-            <div class="col-2">{{ form_widget(sortieForm.maxInscriptions) }}</div>
+            <div class="col-3">{{ form_widget(sortieForm.maxInscriptions) }}</div>
             <div><label for=""></label></div>
             <div></div>
         </div>
 
         <div class="row marge-bottom">
             <div class="col-2 "><label for=""><u>Description de la sortie</u></label></div>
-            <div class="col-2">{{ form_widget(sortieForm.infosescriptions) }}</div>
+            <div class="col-3">{{ form_widget(sortieForm.infosescriptions) }}</div>
             <div><label for=""></label></div>
             <div></div>
         </div>
@@ -58,7 +58,7 @@
             <div class="col-2 offset-md-2">
                {{ form_widget(sortieForm.Enregistrer) }}
             </div>
-            <div class="noffset-md-4 col2 ">
+            <div class="offset-md-2 col2 ">
                 <button class="btn btn-outline-primary col-12" name="publier" type="submit">Publier la sortie</button>
             </div>
             <div class="col-2 offset-md-2">
