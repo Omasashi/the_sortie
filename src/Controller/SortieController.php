@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Etats;
 use App\Entity\Sorties;
 use App\Entity\Villes;
+use App\Form\AnnulerSortieType;
 use App\Form\ModifierSortieType;
 use App\Form\SortieType;
 use Doctrine\ORM\EntityManager;
@@ -73,6 +74,35 @@ class SortieController extends Controller
         return $this->render('sortie/affiche_sortie.html.twig', ['sortie' => $sortie,'allSortie'=>$allSortie]);
     }
 
+    /**
+     * @Route("/annulerSortie/{id}", name="annuleSortie")
+     */
+    public function annuleSortie($id, Request $request, EntityManagerInterface $em)
+    {
+        $sortie = new Sorties();
+        $sortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
+        $sortie = $sortieRepo->find($id);
+        $allSortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
+        $allSortie = $allSortieRepo->findAll();
+
+        $annulerSortieForm = $this->createForm(AnnulerSortieType::class, $sortie);
+        $annulerSortieForm->handleRequest($request);
+
+        if ($annulerSortieForm->get('Enregistrer')->isClicked()) {
+            $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
+            $etat = $etatRepo->find(3);
+            $sortie->setEtatSortie($etat);
+            if ($annulerSortieForm->isSubmitted() && $annulerSortieForm->isValid()) {
+
+                $em->persist($sortie);
+                $em->flush();
+                $this->addFlash("success", "Annulation réussie");
+                return $this->redirectToRoute("home");
+            }
+        }
+        dump($sortie);
+        return $this->render('sortie/annuler_sortie.html.twig',['annulerSortieForm'=>$annulerSortieForm->createView(),'sortie' => $sortie,'allSortie'=>$allSortie]);
+    }
 
     /**
      * @Route("/modifierSortie/{id}", name="modifieSortie")
@@ -104,7 +134,7 @@ class SortieController extends Controller
         if ($modifierSortieForm->get('Supprimer')->isClicked()) {
             $em->remove($sortie);
             $em->flush();
-            $this->addFlash("success", "Modification réussie");
+            $this->addFlash("success", "Supression réussie");
             return $this->redirectToRoute("home");
         }
         if ($modifierSortieForm->get('Enregistrer')->isClicked()) {

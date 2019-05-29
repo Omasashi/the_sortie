@@ -88,8 +88,10 @@
                                             {% else %} Inscrivez-vous {% endif %}</u></strong>
                                     {% endif %}</td>
                                 <td>{{ sortie.sortieParticipant.pseudo }}</td>
-                                <td><a href="{{ path('afficheSortie',{'id':sortie.id}) }}">Afficher <br>{% if sortie.organisateur==(app.User.id) %}
-                                        <a href="{{ path('modifieSortie',{'id':sortie.id}) }}"> Modifer</a>{% endif %}</a></td>
+                                <td><a href="{{ path('afficheSortie',{'id':sortie.id}) }}">Afficher </a><br>{% if sortie.organisateur==(app.User.id) %}
+                                        <a href="{{ path('modifieSortie',{'id':sortie.id}) }}"> Modifer</a><br>
+                                    <a href="{{ path('annuleSortie',{'id':sortie.id}) }}"> Annuler</a>
+                                    {% endif %}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

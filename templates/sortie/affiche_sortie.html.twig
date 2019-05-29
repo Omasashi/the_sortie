@@ -16,7 +16,7 @@
             <div class="col-2">{{ sortie.sortie.nomLieu }}</div>
         </div>
         <div CLASS="marge-bottom row">
-            <div class="col-2">Date limite de la sortie</div>
+            <div class="col-2">Date limite de l'inscription</div>
             <div class="col-2">{{ sortie.dateCloture |date('d/m/Y')}}</div>
             <div class="col-2  offset-md-1">Rue</div>
             <div class="col-2">{{ sortie.sortie.rue }}</div>
@@ -30,7 +30,7 @@
         <div CLASS="marge-bottom row">
             <div class="col-2">Durée :</div>
             <div class="col-2">{{ sortie.duree }}</div>
-            <div class="col-2  offset-md-1">latitude :</div>
+            <div class="col-2  offset-md-1">Latitude :</div>
             <div class="col-2">{{ sortie.sortie.latitude }}</div>
         </div>
         <div CLASS="marge-bottom row">
@@ -38,6 +38,9 @@
             <div class="col-2">{{ sortie.infosescriptions }}</div>
             <div class="col-2  offset-md-1">Longitude :</div>
             <div class="col-2">{{ sortie.sortie.longitude }}</div>
+        </div>
+        <div class="col-2 offset-md-2">
+            <button class="btn btn-outline-primary col-12" type="reset"><a href="{{ path('home') }}">Annuler</a></button>
         </div>
     </div>
     {#  <div id="table-wrapper">
