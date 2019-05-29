@@ -87,7 +87,7 @@
 
                                     {% else %}
                                         <strong><u>Vous n'êtes pas
-                                                inscris.{% if sortie.sortieIncription |length >=sortie.maxInscriptions %}
+                                                inscris.{% if sortie.sortieIncription |length >=sortie.maxInscriptions and sortie.dateCloture > "now"|date()%}
                                             {% else %} Inscrivez-vous {% endif %}</u></strong>
                                     {% endif %}</td>
                                 <td>{{ sortie.sortieParticipant.pseudo }}</td>

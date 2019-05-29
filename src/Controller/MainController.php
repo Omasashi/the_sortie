@@ -65,8 +65,9 @@ class MainController extends Controller
         $user = $this->getUser();
         $sitesForm = $this->createForm(SitesType::class, $sites1);
         $date = date("d-m-Y");
-
-        dump($recherche);
+        $sortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
+        $sortie = $sortieRepo->findAll();
+        dump($sortie);
 
         return $this->render("main/home.html.twig", ['date' => $date, 'user' => $user, 'sites' => $sites, 'sitesForm' => $sitesForm, 'sorties' => $rechercheSortie]);
     }
