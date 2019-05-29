@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Sorties;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -19,10 +20,52 @@ class SortiesRepository extends ServiceEntityRepository
         parent::__construct($registry, Sorties::class);
     }
 
+    public function recherche($like, $organisteur, $etat, $inscrit, $pasInscrit, $sortieSite,$dateDebut,$dateFin)
+    {
+
+        $qb = $this->createQueryBuilder('s');
+        if (isset($like) && $like != "" && $like != null) {
+            $qb->andWhere('s.nom LIKE :search');
+            $qb->setParameter('search', '%' . $like . '%');
+        }
+        if (isset($organisteur) && $organisteur != "" && $organisteur != null) {
+            $qb->andWhere('s.organisateur =:organisateur');
+            $qb->setParameter('organisateur', $organisteur);
+        }
+        if (isset($etat) && $etat != "" && $etat != null) {
+            $qb->andWhere('s.sortieEtat =:etat');
+            $qb->setParameter('etat', $etat);
+        }
+        if (isset($inscrit) && $inscrit != "" && $inscrit != null) {
+            $qb->andWhere('s.sortieParticipant =:inscrit');
+            $qb->setParameter('inscrit', $inscrit);
+        }
+        if (isset($pasInscrit) && $pasInscrit != "" && $pasInscrit != null) {
+            $qb->andWhere('s.sortieParticipant !=:pasInscrit');
+            $qb->setParameter('pasInscrit', $pasInscrit);
+        }
+        if (isset($sortieSite) && $sortieSite != "" && $sortieSite != null) {
+            $qb->andWhere('s.sortieSite =:sortieSite');
+            $qb->setParameter('sortieSite', $sortieSite);
+        }
+        if (isset($dateDebut) && $dateDebut !="" && isset($dateFin )&& $dateFin!=""){
+            $qb->andWhere('s.dateDebut >=:dateDebut AND s.dateCloture <=:dateFin');
+            $qb->setParameter('dateDebut', $dateDebut);
+            $qb->setParameter('dateFin', $dateFin);
+        }
+
+
+            $query = $qb->getQuery();
+
+        //return $query->getResult();
+        return new Paginator($query);
+    }
+
     // /**
     //  * @return Sorties[] Returns an array of Sorties objects
     //  */
     /*
+     * 
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('s')

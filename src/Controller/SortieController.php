@@ -32,16 +32,17 @@ class SortieController extends Controller
         $sortie->setSortieSite($site);
         $sortie->setSortieParticipant($user);
         $sortie->setOrganisateur($user->getId());
-     $etat=new Etats();
+        $etat = new Etats();
 
         $sortieForm = $this->createForm(SortieType::class, $sortie);
         $sortieForm->handleRequest($request);
         if ($sortieForm->get('Enregistrer')->isClicked()) {
             $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
             $etat = $etatRepo->find(3);
+        } else {
+            $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
+            $etat = $etatRepo->find(4);
         }
-        else{$etatRepo = $this->getDoctrine()->getRepository(Etats::class);
-            $etat = $etatRepo->find(4);}
         $sortie->setEtatSortie($etat);
         $lieuForm = $this->createForm(SortieType::class, $sortie);
         $lieuForm->handleRequest($request);
@@ -70,7 +71,7 @@ class SortieController extends Controller
 
 
         dump($sortie);
-        return $this->render('sortie/affiche_sortie.html.twig', ['sortie' => $sortie,'allSortie'=>$allSortie]);
+        return $this->render('sortie/affiche_sortie.html.twig', ['sortie' => $sortie, 'allSortie' => $allSortie]);
     }
 
 }
