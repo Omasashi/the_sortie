@@ -119,6 +119,15 @@ dump($etat);
     }
 
     /**
+     * @Route("/desisterSortie/{id}", name="desisterSortie")
+     */
+    public function desisterSortie($id, Request $request)
+    {
+
+        return $this->render('sortie/desister_sortie.html.twig');
+    }
+
+    /**
      * @Route("/annulerSortie/{id}", name="annuleSortie")
      */
     public function annuleSortie($id, Request $request, EntityManagerInterface $em)
