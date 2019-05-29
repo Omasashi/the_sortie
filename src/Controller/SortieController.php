@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Etats;
+use App\Entity\Inscriptions;
 use App\Entity\Sorties;
 use App\Entity\Villes;
 use App\Form\AnnulerSortieType;
+use App\Form\InscriptionSortieType;
 use App\Form\ModifierSortieType;
 use App\Form\SortieType;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,6 +60,34 @@ class SortieController extends Controller
 
 
     /**
+     * @Route("/inscriptionSortie/{id}", name="inscriptionSortie")
+     */
+    public function inscriptionSortie($id, Request $request, EntityManagerInterface $em)
+    {
+        $sortie = new Sorties();
+        $sortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
+        $sortie = $sortieRepo->find($id);
+
+        $inscriptionSortieForm = $this->createForm(InscriptionSortieType::class, $sortie);
+        $inscriptionSortieForm->handleRequest($request);
+        $date= new \DateTime();
+        dump($date);
+        if ($inscriptionSortieForm->isSubmitted() && $inscriptionSortieForm->isValid()){
+            $inscrit= new Inscriptions();
+            $inscrit->setSortie($sortie);
+            $inscrit->setDateInscription ($date);
+            $inscrit->setParitcipant($this->getUser());
+            $em->persist($inscrit);
+        $em->flush();
+        $this->addFlash("success", "Inscription réussie");
+        return $this->redirectToRoute("home");
+        }
+
+        dump($sortie);
+        return $this->render('sortie/inscription_sortie.html.twig', ["inscriptionSortieForm" => $inscriptionSortieForm->createView(),'sortie' => $sortie]);
+    }
+
+    /**
      * @Route("/afficheSortie/{id}", name="afficheSortie")
      */
     public function afficheSortie($id, Request $request)
@@ -68,7 +97,6 @@ class SortieController extends Controller
         $sortie = $sortieRepo->find($id);
         $allSortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
         $allSortie = $allSortieRepo->findAll();
-
 
         dump($sortie);
         return $this->render('sortie/affiche_sortie.html.twig', ['sortie' => $sortie,'allSortie'=>$allSortie]);

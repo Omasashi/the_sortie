@@ -24,7 +24,7 @@ class Inscriptions
     private $date_inscription;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Participants", inversedBy="inscriptions")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Participants", inversedBy="inscriptions")
      */
     private $paritcipant;
 
@@ -33,10 +33,6 @@ class Inscriptions
      */
     private $sortie;
 
-    public function __construct()
-    {
-        $this->paritcipant = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -56,30 +52,22 @@ class Inscriptions
     }
 
     /**
-     * @return Collection|Participants[]
+     * @return mixed
      */
-    public function getParitcipant(): Collection
+    public function getParitcipant()
     {
         return $this->paritcipant;
     }
 
-    public function addParitcipant(Participants $paritcipant): self
+    /**
+     * @param mixed $paritcipant
+     */
+    public function setParitcipant($paritcipant)
     {
-        if (!$this->paritcipant->contains($paritcipant)) {
-            $this->paritcipant[] = $paritcipant;
-        }
-
-        return $this;
+        $this->paritcipant = $paritcipant;
     }
 
-    public function removeParitcipant(Participants $paritcipant): self
-    {
-        if ($this->paritcipant->contains($paritcipant)) {
-            $this->paritcipant->removeElement($paritcipant);
-        }
 
-        return $this;
-    }
 
     public function getSortie(): ?Sorties
     {
