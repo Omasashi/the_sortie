@@ -52,6 +52,11 @@ class Sorties
 
 
 
+    /**
+     * @ORM\Column(type="string",length=255,nullable=true)
+     */
+    private $motif;
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -328,7 +333,21 @@ class Sorties
         $this->sortieIncription = $sortieIncription;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getMotif()
+    {
+        return $this->motif;
+    }
 
+    /**
+     * @param mixed $motif
+     */
+    public function setMotif($motif)
+    {
+        $this->motif = $motif;
+    }
 
 
 

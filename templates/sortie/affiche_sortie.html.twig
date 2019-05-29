@@ -1,5 +1,5 @@
 {% extends ('layout.html.twig') %}
- {% block title %}{{ parent() }} home{% endblock %}
+ {% block title %}{{ parent() }} Afficher Sortie{% endblock %}
 {% block main %}
     <div class="marge-bottom marge-top DIV text-white container">
 
@@ -16,7 +16,7 @@
             <div class="col-2">{{ sortie.sortie.nomLieu }}</div>
         </div>
         <div CLASS="marge-bottom row">
-            <div class="col-2">Date limite de la sortie</div>
+            <div class="col-2">Date limite de l'inscription</div>
             <div class="col-2">{{ sortie.dateCloture |date('d/m/Y')}}</div>
             <div class="col-2  offset-md-1">Rue</div>
             <div class="col-2">{{ sortie.sortie.rue }}</div>
@@ -30,7 +30,7 @@
         <div CLASS="marge-bottom row">
             <div class="col-2">Durée :</div>
             <div class="col-2">{{ sortie.duree }}</div>
-            <div class="col-2  offset-md-1">latitude :</div>
+            <div class="col-2  offset-md-1">Latitude :</div>
             <div class="col-2">{{ sortie.sortie.latitude }}</div>
         </div>
         <div CLASS="marge-bottom row">
@@ -39,37 +39,40 @@
             <div class="col-2  offset-md-1">Longitude :</div>
             <div class="col-2">{{ sortie.sortie.longitude }}</div>
         </div>
-    </div>
-    <div id="table-wrapper">
-        <div id="table-scroll">
-            <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">Pseudo</th>
-                    <th scope="col">Nom</th>
-
-                </tr>
-                </thead>
-                <tbody>
-                {% for  sortie in sorties %}
-                    <tr>
-                        <th scope="row">{{ sortie.nom }}</th>
-
-                        <td> {% if sortie.sortieParticipant == (app.User) %}
-                                <h4 class="text-center"><strong> X</strong></h4>
-
-                            {% else %}
-                                <strong><u>Vous n'êtes pas inscris.{% if sortie.sortieIncription |length >=sortie.maxInscriptions %}
-                                    {%else  %} Inscrivez-vous {% endif %}</u></strong>
-                            {% endif %}</td>
-                        <td>{{ sortie.sortieParticipant.pseudo }}</td>
-                        <td><a href="{{ path('afficheSortie',{'id':sortie.id}) }}">Afficher</a></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+        <div class="col-2 offset-md-2">
+            <button class="btn btn-outline-primary col-12" type="reset"><a href="{{ path('home') }}">Annuler</a></button>
         </div>
     </div>
-    </div>
-    </div>
+    {#  <div id="table-wrapper">
+         <div id="table-scroll">
+             <table class="table table-bordered table-striped">
+                 <thead>
+                 <tr>
+                     <th scope="col">Pseudo</th>
+                     <th scope="col">Nom</th>
+
+                 </tr>
+                 </thead>
+                 <tbody>
+                {% for  sortie in sorties %}
+                     <tr>
+                         <th scope="row">{{ sortie.nom }}</th>
+
+                         <td> {% if sortie.sortieParticipant == (app.User) %}
+                                 <h4 class="text-center"><strong> X</strong></h4>
+
+                             {% else %}
+                                 <strong><u>Vous n'êtes pas inscris.{% if sortie.sortieIncription |length >=sortie.maxInscriptions %}
+                                     {%else  %} Inscrivez-vous {% endif %}</u></strong>
+                             {% endif %}</td>
+                         <td>{{ sortie.sortieParticipant.pseudo }}</td>
+                         <td><a href="{{ path('afficheSortie',{'id':sortie.id}) }}">Afficher</a></td>
+                     </tr>
+                 {% endfor %}
+                 </tbody>
+             </table>
+         </div>
+     </div>
+     </div>
+    </div>#}
 {% endblock %}
