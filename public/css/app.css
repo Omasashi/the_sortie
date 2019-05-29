@@ -75,4 +75,14 @@ position: relative;
     width:35%;
     border:1px solid red;
 }
+tbody {
+    display:block;
+    max-height:160px;
+    overflow-y:scroll;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
 /*end table*/

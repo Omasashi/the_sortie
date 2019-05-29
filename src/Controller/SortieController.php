@@ -34,24 +34,40 @@ class SortieController extends Controller
         $sortie->setSortieSite($site);
         $sortie->setSortieParticipant($user);
         $sortie->setOrganisateur($user->getId());
-     $etat=new Etats();
+        $etat = new Etats();
 
         $sortieForm = $this->createForm(SortieType::class, $sortie);
         $sortieForm->handleRequest($request);
         if ($sortieForm->get('Enregistrer')->isClicked()) {
             $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
             $etat = $etatRepo->find(3);
+            $sortie->setEtatSortie($etat);
+dump($etat);
+        } else {
+            $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
+            $etat = $etatRepo->find(4);
+            $sortie->setEtatSortie($etat);
         }
-        else{$etatRepo = $this->getDoctrine()->getRepository(Etats::class);
-            $etat = $etatRepo->find(4);}
-        $sortie->setEtatSortie($etat);
-        $lieuForm = $this->createForm(SortieType::class, $sortie);
-        $lieuForm->handleRequest($request);
+
+
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
 
             $em->persist($sortie);
             $em->flush();
-            $this->addFlash("success", "Modification réussie");
+            $this->addFlash("success", "Crétation réussie");
+            $inscrit= new  Inscriptions();
+//            $allSortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
+//            $allSortie = $allSortieRepo->findAll();
+//            $inscrit->addParitcipant($this->getUser());
+//            $inscrit->setDateInscription(new \DateTime());
+//            foreach (  $allSortie as $ti ){
+//                if($ti->getOrganisateur()== $this->getUser()->getid()&& getSortieParticipant()!=){
+//                    $inscrit->setSortie($ti);
+//                }
+//            }
+//            $em->persist($inscrit);
+//            $em->flush();
+
             return $this->redirectToRoute("home");
         }
 
@@ -99,7 +115,7 @@ class SortieController extends Controller
         $allSortie = $allSortieRepo->findAll();
 
         dump($sortie);
-        return $this->render('sortie/affiche_sortie.html.twig', ['sortie' => $sortie,'allSortie'=>$allSortie]);
+        return $this->render('sortie/affiche_sortie.html.twig', ['sortie' => $sortie, 'allSortie' => $allSortie]);
     }
 
     /**
