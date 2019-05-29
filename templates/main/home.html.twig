@@ -87,8 +87,8 @@
 
                                     {% else %}
                                         <strong><u>Vous n'êtes pas
-                                                inscris.{% if sortie.sortieIncription |length >=sortie.maxInscriptions and sortie.dateCloture > "now"|date()%}
-                                            {% else %} Inscrivez-vous {% endif %}</u></strong>
+                                                inscris. <br>{% if sortie.sortieIncription |length >=sortie.maxInscriptions and sortie.dateCloture > "now"|date()%}
+                                            {% else %}<a href="{{ path('inscriptionSortie',{'id':sortie.id}) }}">Inscrivez vous </a>{% endif %}</u></strong>
                                     {% endif %}</td>
                                 <td>{{ sortie.sortieParticipant.pseudo }}</td>
                                 <td><a href="{{ path('afficheSortie',{'id':sortie.id}) }}">Afficher </a><br>
