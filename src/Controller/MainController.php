@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Etats;
 use App\Entity\Sites;
 use App\Entity\Sorties;
 use App\Form\SitesType;
@@ -28,7 +29,9 @@ class MainController extends Controller
         $siterecherche="";
         $dateDebut="";
         $dateFin="";
-
+        $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
+        $etat =$etatRepo->findId(4) ;
+        dump($etat);
         $rechercheSortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
         $recherche = $request->query->all();
         if (isset($recherche['organisateur']) && $recherche['organisateur'] == 'on') {

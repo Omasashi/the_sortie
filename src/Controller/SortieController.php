@@ -34,27 +34,31 @@ class SortieController extends Controller
         $sortie->setSortieSite($site);
         $sortie->setSortieParticipant($user);
         $sortie->setOrganisateur($user->getId());
-        $etat = new Etats();
+
 
         $sortieForm = $this->createForm(SortieType::class, $sortie);
         $sortieForm->handleRequest($request);
-        if ($sortieForm->get('Enregistrer')->isClicked()) {
-            $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
-            $etat = $etatRepo->find(3);
-            $sortie->setEtatSortie($etat);
-dump($etat);
-        } else {
-            $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
-            $etat = $etatRepo->find(4);
-            $sortie->setEtatSortie($etat);
-        }
 
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+            if ($sortieForm->get('Enregistrer')->isClicked()) {
+                $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
+                $etat =$etatRepo->findId(3) ;
+                $sortie->setSortieEtat($etat);
+                $em->persist($sortie);
+                $em->flush();
+                $this->addFlash("success", "Crétation réussie");
+            } else {
+                $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
+                $etat =$etatRepo->findId(4) ;
+                $sortie->setSortieEtat($etat);
+                $em->persist($sortie);
+                $em->flush();
+                $this->addFlash("success", "Crétation réussie");
 
-            $em->persist($sortie);
-            $em->flush();
-            $this->addFlash("success", "Crétation réussie");
+            }
+
+
             $inscrit= new  Inscriptions();
 //            $allSortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
 //            $allSortie = $allSortieRepo->findAll();
@@ -68,7 +72,7 @@ dump($etat);
 //            $em->persist($inscrit);
 //            $em->flush();
 
-            return $this->redirectToRoute("home");
+            return $this->redirectToRoute("createSortie");
         }
 
         return $this->render('sortie/create_sortie.html.twig', ['user' => $user, 'villes' => $villes, "sortieForm" => $sortieForm->createView(), "site" => $nomSite]);
