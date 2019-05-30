@@ -29,9 +29,6 @@ class MainController extends Controller
         $siterecherche="";
         $dateDebut="";
         $dateFin="";
-        $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
-        $etat =$etatRepo->findId(4) ;
-        dump($etat);
         $rechercheSortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
         $recherche = $request->query->all();
         if (isset($recherche['organisateur']) && $recherche['organisateur'] == 'on') {
@@ -57,8 +54,6 @@ class MainController extends Controller
             $dateFin=$recherche['dateFin'];
         }
         $rechercheSortie = $rechercheSortieRepo->recherche($like, $organisateur, $etat,$inscrit,$pasInscrit,$siterecherche,$dateDebut,$dateFin);
-
-
 
 
         $recherche = $request->query->all();

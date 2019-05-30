@@ -48,6 +48,7 @@ class SortieController extends Controller
                 $em->persist($sortie);
                 $em->flush();
                 $this->addFlash("success", "Crétation réussie");
+                return $this->redirectToRoute("home");
             } else {
                 $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
                 $etat =$etatRepo->findId(4) ;
@@ -55,7 +56,7 @@ class SortieController extends Controller
                 $em->persist($sortie);
                 $em->flush();
                 $this->addFlash("success", "Crétation réussie");
-
+                return $this->redirectToRoute("home");
             }
 
 
@@ -72,7 +73,7 @@ class SortieController extends Controller
 //            $em->persist($inscrit);
 //            $em->flush();
 
-            return $this->redirectToRoute("createSortie");
+
         }
 
         return $this->render('sortie/create_sortie.html.twig', ['user' => $user, 'villes' => $villes, "sortieForm" => $sortieForm->createView(), "site" => $nomSite]);
