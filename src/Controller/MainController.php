@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Etats;
+use App\Entity\Inscriptions;
 use App\Entity\Sites;
 use App\Entity\Sorties;
 use App\Form\SitesType;
@@ -67,6 +68,7 @@ class MainController extends Controller
         $sortie = $sortieRepo->findAll();
         dump($sortie);
 
-        return $this->render("main/home.html.twig", ['date' => $date, 'user' => $user, 'sites' => $sites, 'sitesForm' => $sitesForm, 'sorties' => $rechercheSortie]);
+        $inscript=0;
+        return $this->render("main/home.html.twig", ['date' => $date, 'user' => $user, 'sites' => $sites, 'sitesForm' => $sitesForm, 'sorties' => $rechercheSortie,'ins'=>$inscript]);
     }
 }
