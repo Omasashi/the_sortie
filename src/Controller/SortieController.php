@@ -149,7 +149,7 @@ class SortieController extends Controller
         if ($annulerSortieForm->get('Enregistrer')->isClicked()) {
             $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
             $etat = $etatRepo->find(3);
-            $sortie->setEtatSortie($etat);
+            $sortie->setSortieEtat($etat);
             if ($annulerSortieForm->isSubmitted() && $annulerSortieForm->isValid()) {
 
                 $em->persist($sortie);
@@ -198,7 +198,7 @@ class SortieController extends Controller
         if ($modifierSortieForm->get('Enregistrer')->isClicked()) {
             $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
             $etat = $etatRepo->find(3);
-            $sortie->setEtatSortie($etat);
+            $sortie->setSortieEtat($etat);
             if ($modifierSortieForm->isSubmitted() && $modifierSortieForm->isValid()) {
 
                 $em->persist($sortie);
@@ -210,7 +210,7 @@ class SortieController extends Controller
         if($modifierSortieForm->get('Publier')->isClicked()){
             $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
             $etat = $etatRepo->find(4);
-            $sortie->setEtatSortie($etat);
+            $sortie->setSortieEtat($etat);
             if ($modifierSortieForm->isSubmitted() && $modifierSortieForm->isValid()) {
 
                 $em->persist($sortie);
