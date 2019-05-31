@@ -79,8 +79,6 @@ class SortieController extends Controller
             }
 
 
-
-
         }
 
         return $this->render('sortie/create_sortie.html.twig', ['user' => $user, 'villes' => $villes, "sortieForm" => $sortieForm->createView(), "site" => $nomSite]);
@@ -133,16 +131,16 @@ class SortieController extends Controller
     /**
      * @Route("/desisterSortie/{id}", name="desisterSortie")
      */
-    public function desisterSortie($id, Request $request,EntityManagerInterface $em)
+    public function desisterSortie($id, Request $request, EntityManagerInterface $em)
     {
         $sortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
         $sortie = $sortieRepo->find($id);
         $inscriptionSortieForm = $this->createForm(InscriptionSortieType::class, $sortie);
         $inscriptionSortieForm->handleRequest($request);
 
-            if ($inscriptionSortieForm->isSubmitted() && $inscriptionSortieForm->isValid()){
+        if ($inscriptionSortieForm->isSubmitted() && $inscriptionSortieForm->isValid()) {
             $instRepo = $this->getDoctrine()->getRepository(Inscriptions::class);
-            $delete=$instRepo->findinscription($id,$this->getUser());
+            $delete = $instRepo->findinscription($id, $this->getUser());
             dump($delete);
             $em->remove($delete);
             $em->flush();
@@ -150,7 +148,7 @@ class SortieController extends Controller
             return $this->redirectToRoute("home");
         }
 
-        return $this->render('sortie/desister_sortie.html.twig', ['sortie' => $sortie,'inscriptionSortieForm'=>$inscriptionSortieForm->createView()]);
+        return $this->render('sortie/desister_sortie.html.twig', ['sortie' => $sortie, 'inscriptionSortieForm' => $inscriptionSortieForm->createView()]);
     }
 
     /**
