@@ -49,6 +49,15 @@ class SortieController extends Controller
                 $em->persist($sortie);
                 $em->flush();
                 $this->addFlash("success", "Crétation réussie");
+
+                $inscrit = new  Inscriptions();
+                $orgSortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
+                $orgSortie = $orgSortieRepo->findSortieNonInscritOrganisteur($this->getUser());
+                $inscrit->setParitcipant($this->getUser());
+                $inscrit->setDateInscription(new \DateTime());
+                $inscrit->setSortie($orgSortie);
+                $em->persist($inscrit);
+                $em->flush();
                 return $this->redirectToRoute("home");
             } else {
                 $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
@@ -57,22 +66,19 @@ class SortieController extends Controller
                 $em->persist($sortie);
                 $em->flush();
                 $this->addFlash("success", "Crétation réussie");
+
+                $inscrit = new  Inscriptions();
+                $orgSortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
+                $orgSortie = $orgSortieRepo->findSortieNonInscritOrganisteur($this->getUser());
+                $inscrit->setParitcipant($this->getUser());
+                $inscrit->setDateInscription(new \DateTime());
+                $inscrit->setSortie($orgSortie);
+                $em->persist($inscrit);
+                $em->flush();
                 return $this->redirectToRoute("home");
             }
 
 
-            $inscrit = new  Inscriptions();
-//            $allSortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
-//            $allSortie = $allSortieRepo->findAll();
-//            $inscrit->addParitcipant($this->getUser());
-//            $inscrit->setDateInscription(new \DateTime());
-//            foreach (  $allSortie as $ti ){
-//                if($ti->getOrganisateur()== $this->getUser()->getid()&& getSortieParticipant()!=){
-//                    $inscrit->setSortie($ti);
-//                }
-//            }
-//            $em->persist($inscrit);
-//            $em->flush();
 
 
         }

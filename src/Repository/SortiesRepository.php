@@ -81,15 +81,17 @@ class SortiesRepository extends ServiceEntityRepository
     }
     */
 
-//
-//    public function findOneBySomeField($value): ?Sorties
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s. = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+
+    public function findSortieNonInscritOrganisteur($user): ?Sorties
+    {
+        return $this->createQueryBuilder('s')
+            ->join('s.sortieIncription','i')
+            ->andWhere('s.organisateur = :val')
+            ->andWhere('i.paritcipant!=:val')
+            ->setParameter('val', $user)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 
 }
