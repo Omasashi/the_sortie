@@ -12,9 +12,9 @@
                 <div><label class="text-center" for="">Nom : {{ user.nom }}</label></div>
                 <div><label class="text-center" for="">Téléphone : {{ user.telephone }}</label></div>
                 <div><label class="text-center" for="">Email : {{ user.mail }}</label></div>
-                <div><label class="text-center" for="">Ville de rattachement : </label></div>
-                <div class="text-center"><a class="btn btn-dark mx-2 my-5" href="{{ path('home') }}" role="button">Retour</a>
-                    <a class="btn btn-dark mx-2 my-5" href="{{ path('modifier_profil') }}" role="button">Modifier Profil</a></div>
+                <div><label class="text-center" for="">Ville de rattachement : {{ user.siteparticipant.nomSite }}</label></div>
+                <div class="text-center"><a class="btn btn-primary mx-2 my-5" href="{{ path('home') }}" role="button">Retour</a>
+                    <a class="btn btn-primary mx-2 my-5" href="{{ path('modifier_profil') }}" role="button">Modifier Profil</a></div>
             </div>
             <div class="col-sm">
             </div>

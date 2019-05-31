@@ -1,0 +1,24 @@
+{% extends ('layout.html.twig') %}
+{% block title %}{{ parent() }} Profil participant {% endblock %}
+{% block main %}
+    <div class="DIV container text-white">
+        <div class="row">
+            <div class="col-sm">
+                <div class="text-center my-5"><img src="{{ asset('css/image/user-solid.svg') }}" alt="profil" class="border rounded img-thumbnail" width="100px"></div>
+            </div>
+            <div class="col-sm">
+                <div><h1 class="text-center">{{ participant.pseudo }}</h1></div>
+                <div><label class="text-center" for="">Prénom : {{ participant.prenom }}</label></div>
+                <div><label class="text-center" for="">Nom : {{ participant.nom }}</label></div>
+                <div><label class="text-center" for="">Téléphone : {{ participant.telephone }}</label></div>
+                <div><label class="text-center" for="">Email : {{ participant.mail }}</label></div>
+                <div><label class="text-center" for="">Ville de rattachement : {{ participant.siteparticipant.nomSite }}</label></div>
+                <div class="text-center"><a class="btn btn-primary mx-2 my-5" href="{{ path('home') }}" role="button">Retour</a></div>
+            </div>
+            <div class="col-sm">
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

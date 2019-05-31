@@ -17,12 +17,26 @@ class UserController extends Controller
     /**
      * @Route("/user/profil", name="profil")
      */
-    public function profil()//int $id, EntityManagerInterface $em
+    public function profil()
     {
         $sitesRepo = $this->getDoctrine()->getRepository(Sites::class);
         $sites = $sitesRepo->findAll();
         $user = $this->getUser();
         return $this->render('user/profil.html.twig', ['user' => $user, 'sites' => $sites,]);
+    }
+
+    /**
+     * @Route("/user/profil_participant/{id}", name="profilParticipant")
+     */
+    public function participantProfil($id)
+    {
+        $participant= new Participants();
+        $sitesRepo = $this->getDoctrine()->getRepository(Sites::class);
+        $sites = $sitesRepo->findAll();
+        $participantRepo = $this->getDoctrine()->getRepository(Participants::class);
+        $participant = $participantRepo->find($id);
+
+        return $this->render('user/profil_participant.html.twig', ['participant' => $participant, 'sites' => $sites,]);
     }
 
     /**
