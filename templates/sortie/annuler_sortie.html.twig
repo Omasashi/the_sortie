@@ -15,21 +15,23 @@
             <div class="col-2  offset-md-1">Lieu :</div>
             <div class="col-2">{{ sortie.sortie.rue }}</div>
         </div>
-        <div>
+       {% if sortie.organisateur==(app.user).id %} <div>
             {{ form_start(annulerSortieForm) }}
             <div class="row marge-bottom">
                 <div class="col-2"><label for=""><u>Motif</u></label></div>
                 <div class="col-3">{{ form_widget(annulerSortieForm.motif) }}</div>
             </div>
         </div>
-    <div class="row marge-bottom">
+        <div class="row marge-bottom">
+            <div class="col-2 offset-md-2">
+
+                {{ form_widget(annulerSortieForm.Enregistrer) }}
+                {{ form_end(annulerSortieForm) }}
+            </div>{% endif %}
         <div class="col-2 offset-md-2">
             <button class="btn btn-outline-primary col-12" type="reset"><a href="{{ path('home') }}">Retour</a></button>
         </div>
-        <div class="col-2 offset-md-2">
-            {{ form_widget(annulerSortieForm.Enregistrer) }}
-        </div>
         </div>
     </div>
-    {{ form_end(annulerSortieForm) }}
+
 {% endblock %}
