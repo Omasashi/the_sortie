@@ -1,6 +1,7 @@
 {% extends ('layout.html.twig') %}
  {% block title %}{{ parent() }} Home{% endblock %}
 {% block main %}
+
     <div class="marge-bottom marge-top text-white DIV container">
         <div class="TRANS marge-bottom marge-top">
             <div class="row container text-left text-white">
@@ -75,7 +76,10 @@
                         </tr>
                         </thead>
                         <tbody>
+
                         {% for  sortie in sorties %}
+                            {% set insct=0 %}
+                            {% set pasinsr=0 %}
                             <tr>
                                 <th scope="row">{{ sortie.nom }}</th>
                                 <td>{{ sortie.dateDebut |date('d/m/Y') }}</td>
@@ -83,22 +87,30 @@
                                 <td>{{ sortie.sortieIncription |length }}/{{ sortie.maxInscriptions }}</td>
                                 <td>{{ sortie.sortieEtat.libelle }}</td>
                                 <td>{% for inst in sortie.sortieIncription %}
-                                        {% if sortie.id == inst.sortie.id and inst.paritcipant==(app.user) %}
-
+                                        {% if sortie.id == inst.sortie.id and inst.paritcipant==(app.user) and insct < 1  %}
+                                            {% set insct=insct+1 %}
                                             <h4 class="text-center"><strong> X</strong></h4>
                                             <a href="{{ path('desisterSortie',{'id':sortie.id}) }}"> Se désister</a>
-                                        {% else %}
+                                        {% elseif pasinsr < 1 %}
+
                                             <strong>Vous n'êtes pas
-                                            inscris. <br>{% if sortie.sortieIncription |length < sortie.maxInscriptions and sortie.dateCloture < "now"|date()%}
-                                        {% else %}<u><a href="{{ path('inscriptionSortie',{'id':sortie.id}) }}">Inscrivez vous </a></u></strong>{% endif %}
+                                            inscris.
+                                            <br>{% if sortie.sortieIncription |length < sortie.maxInscriptions and sortie.dateCloture < "now"|date() %}
+                                        {% else %}<u><a href="{{ path('inscriptionSortie',{'id':sortie.id}) }}">Inscrivez
+                                                vous </a></u></strong>{% set pasinsr= pasinsr+1 %}{% endif %}
                                         {% endif %}
                                     {% endfor %}
                                     {% if (sortie.sortieIncription |length) == ins and not sortie.organisateur==(app.user).id %}
                                         <strong>Vous n'êtes pas
-                                        inscris. <br>{% if sortie.sortieIncription |length < sortie.maxInscriptions and sortie.dateCloture < "now"|date()%}
-                                    {% else %}<u><a href="{{ path('inscriptionSortie',{'id':sortie.id}) }}">Inscrivez vous </a></u></strong>{% endif %}
-                                    {% endif %}{% if sortie.organisateur==(app.user).id %} <h4 class="text-center"><strong> X <br></strong></h4><br> vous êtes l'organisteur{% endif %}</td>
-                                <td><a href="{{ path('profilParticipant',{'id':sortie.organisateur}) }}">{{ sortie.sortieParticipant.pseudo }}</a> </td>
+                                        inscris.
+                                        <br>{% if sortie.sortieIncription |length < sortie.maxInscriptions and sortie.dateCloture < "now"|date() %}
+                                    {% else %}<u><a href="{{ path('inscriptionSortie',{'id':sortie.id}) }}">Inscrivez
+                                            vous </a></u></strong>{% endif %}
+                                    {% endif %}{% if sortie.organisateur==(app.user).id %} vous êtes l'organisteur{% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ path('profilParticipant',{'id':sortie.organisateur}) }}">{{ sortie.sortieParticipant.pseudo }}</a>
+                                </td>
                                 <td><a href="{{ path('afficheSortie',{'id':sortie.id}) }}">Afficher </a><br>
                                     {% if sortie.organisateur==(app.User.id) %}
                                         <a href="{{ path('modifieSortie',{'id':sortie.id}) }}"> Modifer</a><br>

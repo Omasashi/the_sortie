@@ -33,17 +33,17 @@ class SortiesRepository extends ServiceEntityRepository
             $qb->setParameter('organisateur', $organisteur);
         }
         if (isset($etat) && $etat != "" && $etat != null) {
-            $qb->andWhere('s.sortieEtat =:etat');
+            $qb->orWhere('s.sortieEtat =:etat');
             $qb->setParameter('etat', $etat);
         }
         if (isset($inscrit) && $inscrit != "" && $inscrit != null) {
             $qb->join('s.sortieIncription','i');
-            $qb->andWhere('i.paritcipant =:inscrit');
+            $qb->orWhere('i.paritcipant =:inscrit');
             $qb->setParameter('inscrit', $inscrit);
         }
         if (isset($pasInscrit) && $pasInscrit != "" && $pasInscrit != null) {
             $qb->join('s.sortieIncription','i');
-            $qb->andWhere('i.paritcipant !=:pasInscrit');
+            $qb->orWhere('i.paritcipant !=:pasInscrit');
             $qb->setParameter('pasInscrit', $pasInscrit);
         }
         if (isset($sortieSite) && $sortieSite != "" && $sortieSite != null) {
