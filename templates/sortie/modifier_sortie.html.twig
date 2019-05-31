@@ -53,19 +53,17 @@
   </div>
 
 
-  <div class="row marge-bottom">
-   <div class="col-2 offset-md-2">
-    {{ form_widget(modifierSortieForm.Enregistrer) }}
-   </div>
-   <div class="col-2 offset-md-2">
-    {{ form_widget(modifierSortieForm.Supprimer) }}
-   </div>
-   <div class="col-2 offset-md-2">
-    {{ form_widget(modifierSortieForm.Publier) }}
-   </div>
-   <div class="col-2 offset-md-2">
-    <button class="btn btn-outline-primary col-12" type="reset"><a href="{{ path('home') }}">Annuler</a></button>
-   </div>
-  </div>
-  {{ form_end(modifierSortieForm) }}</div>
+  <div class="row marge-bottom">{% if  sortie.organisateur==(app.user).id%}
+ <div class="col-2 offset-md-1">
+  {{ form_widget(modifierSortieForm.Enregistrer) }}
+ </div>
+ <div class="col-2 offset-md-1">
+  {{ form_widget(modifierSortieForm.Supprimer) }}
+ </div>
+ <div class="col-2 offset-md-1">
+  {{ form_widget(modifierSortieForm.Publier) }}
+    {{ form_end(modifierSortieForm) }}</div>{% endif %}
+   <div class="col-2 offset-md-1">
+    <button class="btn btn-outline-primary col-10" type="reset"><a href="{{ path('home') }}">Annuler</a></button>
+   </div></div>
 {% endblock %}

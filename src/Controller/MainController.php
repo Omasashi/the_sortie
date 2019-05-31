@@ -67,6 +67,10 @@ class MainController extends Controller
         $sortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
         $sortie = $sortieRepo->findAll();
         dump($sortie);
+        foreach ($sortie as $ti){
+            foreach ($ti->getSortieIncription() as $tit)
+           dump($tit->getParitcipant() );
+        }
 
         $inscript=0;
         return $this->render("main/home.html.twig", ['date' => $date, 'user' => $user, 'sites' => $sites, 'sitesForm' => $sitesForm, 'sorties' => $rechercheSortie,'ins'=>$inscript]);

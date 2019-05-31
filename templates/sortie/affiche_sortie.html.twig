@@ -24,8 +24,8 @@
         <div CLASS="marge-bottom row">
             <div class="col-2">Nombre de places :</div>
             <div class="col-2">{{ sortie.maxInscriptions }}</div>
-            <div class="col-2  offset-md-1" Code postal :></div>
-            <div class="col-2"></div>
+            <div class="col-2  offset-md-1" ><label for="">Code postal :</label></div>
+            <div class="col-2">{{ sortie.sortie.lieux.codePostal }}</div>
         </div>
         <div CLASS="marge-bottom row">
             <div class="col-2">Durée :</div>
@@ -39,41 +39,37 @@
             <div class="col-2  offset-md-1">Longitude :</div>
             <div class="col-2">{{ sortie.sortie.longitude }}</div>
         </div>
-        <div class="col-2 offset-md-2">
-            <button class="btn btn-outline-primary col-12" type="reset"><a href="{{ path('home') }}">Annuler</a>
-            </button>
-        </div>
+
+
+   <div class="row"> <div id="table-wrapper" class="col-6">
+           <div id="table-scroll">
+               <table class="table table-bordered table-striped">
+                   <thead>
+                   <tr>
+                       <th scope="col">Pseudo</th>
+                       <th scope="col">Nom</th>
+
+                   </tr>
+                   </thead>
+                   <tbody>
+                   {% for  sort in inscrit %}
+                       <tr>{% if sort.sortie.id == sortie.id %}
+                               <th scope="row">{{ sort.paritcipant.pseudo }}</th>
+                           {% endif %}
+                           {% if sort.sortie.id == sortie.id %}
+                               <td>
+                                   <h4 class="text-center"><strong>{{ sort.paritcipant.nom }}</strong></h4>
+                               </td> {% endif %}
+                       </tr>
+                   {% endfor %}
+                   </tbody>
+               </table>
+           </div>
+       </div>
+       <div class="col-2 offset-md-2">
+           <button class="btn btn-outline-primary col-12" type="reset"><a href="{{ path('home') }}">Retour</a>
+           </button>
+       </div></div>
     </div>
-    {#  <div id="table-wrapper">
-         <div id="table-scroll">
-             <table class="table table-bordered table-striped">
-                 <thead>
-                 <tr>
-                     <th scope="col">Pseudo</th>
-                     <th scope="col">Nom</th>
 
-                 </tr>
-                 </thead>
-                 <tbody>
-                {% for  sortie in sorties %}
-                     <tr>
-                         <th scope="row">{{ sortie.nom }}</th>
-
-                         <td> {% if sortie.sortieParticipant == (app.User) %}
-                                 <h4 class="text-center"><strong> X</strong></h4>
-
-                             {% else %}
-                                 <strong><u>Vous n'êtes pas inscris.{% if sortie.sortieIncription |length >=sortie.maxInscriptions %}
-                                     {%else  %} Inscrivez-vous {% endif %}</u></strong>
-                             {% endif %}</td>
-                         <td>{{ sortie.sortieParticipant.pseudo }}</td>
-                         <td><a href="{{ path('afficheSortie',{'id':sortie.id}) }}">Afficher</a></td>
-                     </tr>
-                 {% endfor %}
-                 </tbody>
-             </table>
-         </div>
-     </div>
-     </div>
-    </div>#}
 {% endblock %}
