@@ -54,7 +54,7 @@
                    <tbody>
                    {% for  sort in inscrit %}
                        <tr>{% if sort.sortie.id == sortie.id %}
-                               <th scope="row">{{ sort.paritcipant.pseudo }}</th>
+                               <th scope="row"><a href="{{ path('profilParticipant',{'id':sortie.organisateur}) }}">{{ sort.paritcipant.pseudo }}</a></th>
                            {% endif %}
                            {% if sort.sortie.id == sortie.id %}
                                <td>
