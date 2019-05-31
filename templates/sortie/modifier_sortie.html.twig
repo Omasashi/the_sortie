@@ -6,7 +6,7 @@
   <div class="row marge-bottom marge-top">
    <div class="col-2"><label for=""><u>Nom de la sortie</u></label></div>
    <div class="col-3">{{ form_widget(modifierSortieForm.nom) }}</div>
-   <div class="col-2 offset-md-1 "><label for=""><u>ville organisatrice</u></label></div>
+   <div class="col-2 offset-md-1 "><label for=""><u>Ville organisatrice</u></label></div>
    <div class="col-3"><label for="">{{ site }}</label></div>
 
   </div>
@@ -14,7 +14,7 @@
   <div class="row marge-bottom">
    <div class="col-2"><label for=""><u>Date de debut de la sortie</u></label></div>
    <div class="col-3">{{ form_widget(modifierSortieForm.dateDebut) }}</div>
-   <div class=" col-2 offset-md-1"><label for=""><u>ville</u></label></div>
+   <div class=" col-2 offset-md-1"><label for=""><u>Ville</u></label></div>
    <div class="col-3"><select id="ville"name="ville">
      <option value="">--Choix d'une ville--</option>
      {%for ville in villes%}

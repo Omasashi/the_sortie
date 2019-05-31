@@ -7,6 +7,7 @@ use App\Entity\Inscriptions;
 use App\Entity\Sorties;
 use App\Entity\Villes;
 use App\Form\AnnulerSortieType;
+use App\Form\DesinscrirType;
 use App\Form\InscriptionSortieType;
 use App\Form\ModifierSortieType;
 use App\Form\SortieType;
@@ -34,41 +35,52 @@ class SortieController extends Controller
         $sortie->setSortieSite($site);
         $sortie->setSortieParticipant($user);
         $sortie->setOrganisateur($user->getId());
-        $etat = new Etats();
+
 
         $sortieForm = $this->createForm(SortieType::class, $sortie);
         $sortieForm->handleRequest($request);
-        if ($sortieForm->get('Enregistrer')->isClicked()) {
-            $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
-            $etat = $etatRepo->find(3);
-            $sortie->setEtatSortie($etat);
-dump($etat);
-        } else {
-            $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
-            $etat = $etatRepo->find(4);
-            $sortie->setEtatSortie($etat);
-        }
 
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+            if ($sortieForm->get('Enregistrer')->isClicked()) {
+                $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
+                $etat = $etatRepo->findId(3);
+                $sortie->setSortieEtat($etat);
+                $em->persist($sortie);
+                $em->flush();
+                $this->addFlash("success", "Crétation réussie");
 
-            $em->persist($sortie);
-            $em->flush();
-            $this->addFlash("success", "Crétation réussie");
-            $inscrit= new  Inscriptions();
-//            $allSortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
-//            $allSortie = $allSortieRepo->findAll();
-//            $inscrit->addParitcipant($this->getUser());
-//            $inscrit->setDateInscription(new \DateTime());
-//            foreach (  $allSortie as $ti ){
-//                if($ti->getOrganisateur()== $this->getUser()->getid()&& getSortieParticipant()!=){
-//                    $inscrit->setSortie($ti);
-//                }
-//            }
-//            $em->persist($inscrit);
-//            $em->flush();
+                $inscrit = new  Inscriptions();
+                $orgSortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
+                $orgSortie = $orgSortieRepo->findSortieNonInscritOrganisteur($this->getUser());
+                $inscrit->setParitcipant($this->getUser());
+                $inscrit->setDateInscription(new \DateTime());
+                $inscrit->setSortie($orgSortie);
+                $em->persist($inscrit);
+                $em->flush();
+                return $this->redirectToRoute("home");
+            } else {
+                $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
+                $etat = $etatRepo->findId(4);
+                $sortie->setSortieEtat($etat);
+                $em->persist($sortie);
+                $em->flush();
+                $this->addFlash("success", "Crétation réussie");
 
-            return $this->redirectToRoute("home");
+                $inscrit = new  Inscriptions();
+                $orgSortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
+                $orgSortie = $orgSortieRepo->findSortieNonInscritOrganisteur($this->getUser());
+                $inscrit->setParitcipant($this->getUser());
+                $inscrit->setDateInscription(new \DateTime());
+                $inscrit->setSortie($orgSortie);
+                $em->persist($inscrit);
+                $em->flush();
+                return $this->redirectToRoute("home");
+            }
+
+
+
+
         }
 
         return $this->render('sortie/create_sortie.html.twig', ['user' => $user, 'villes' => $villes, "sortieForm" => $sortieForm->createView(), "site" => $nomSite]);
@@ -86,21 +98,21 @@ dump($etat);
 
         $inscriptionSortieForm = $this->createForm(InscriptionSortieType::class, $sortie);
         $inscriptionSortieForm->handleRequest($request);
-        $date= new \DateTime();
+        $date = new \DateTime();
         dump($date);
-        if ($inscriptionSortieForm->isSubmitted() && $inscriptionSortieForm->isValid()){
-            $inscrit= new Inscriptions();
+        if ($inscriptionSortieForm->isSubmitted() && $inscriptionSortieForm->isValid()) {
+            $inscrit = new Inscriptions();
             $inscrit->setSortie($sortie);
-            $inscrit->setDateInscription ($date);
+            $inscrit->setDateInscription($date);
             $inscrit->setParitcipant($this->getUser());
             $em->persist($inscrit);
-        $em->flush();
-        $this->addFlash("success", "Inscription réussie");
-        return $this->redirectToRoute("home");
+            $em->flush();
+            $this->addFlash("success", "Inscription réussie");
+            return $this->redirectToRoute("home");
         }
 
         dump($sortie);
-        return $this->render('sortie/inscription_sortie.html.twig', ["inscriptionSortieForm" => $inscriptionSortieForm->createView(),'sortie' => $sortie]);
+        return $this->render('sortie/inscription_sortie.html.twig', ["inscriptionSortieForm" => $inscriptionSortieForm->createView(), 'sortie' => $sortie]);
     }
 
     /**
@@ -116,6 +128,29 @@ dump($etat);
 
         dump($sortie);
         return $this->render('sortie/affiche_sortie.html.twig', ['sortie' => $sortie, 'allSortie' => $allSortie]);
+    }
+
+    /**
+     * @Route("/desisterSortie/{id}", name="desisterSortie")
+     */
+    public function desisterSortie($id, Request $request,EntityManagerInterface $em)
+    {
+        $sortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
+        $sortie = $sortieRepo->find($id);
+        $inscriptionSortieForm = $this->createForm(InscriptionSortieType::class, $sortie);
+        $inscriptionSortieForm->handleRequest($request);
+
+            if ($inscriptionSortieForm->isSubmitted() && $inscriptionSortieForm->isValid()){
+            $instRepo = $this->getDoctrine()->getRepository(Inscriptions::class);
+            $delete=$instRepo->findinscription($id,$this->getUser());
+            dump($delete);
+            $em->remove($delete);
+            $em->flush();
+            $this->addFlash("success", "Désinscription réussie");
+            return $this->redirectToRoute("home");
+        }
+
+        return $this->render('sortie/desister_sortie.html.twig', ['sortie' => $sortie,'inscriptionSortieForm'=>$inscriptionSortieForm->createView()]);
     }
 
     /**
@@ -135,7 +170,7 @@ dump($etat);
         if ($annulerSortieForm->get('Enregistrer')->isClicked()) {
             $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
             $etat = $etatRepo->find(3);
-            $sortie->setEtatSortie($etat);
+            $sortie->setSortieEtat($etat);
             if ($annulerSortieForm->isSubmitted() && $annulerSortieForm->isValid()) {
 
                 $em->persist($sortie);
@@ -145,13 +180,14 @@ dump($etat);
             }
         }
         dump($sortie);
-        return $this->render('sortie/annuler_sortie.html.twig',['annulerSortieForm'=>$annulerSortieForm->createView(),'sortie' => $sortie,'allSortie'=>$allSortie]);
+        return $this->render('sortie/annuler_sortie.html.twig', ['annulerSortieForm' => $annulerSortieForm->createView(), 'sortie' => $sortie, 'allSortie' => $allSortie]);
     }
 
     /**
      * @Route("/modifierSortie/{id}", name="modifieSortie")
      */
-    public function modifierSortie($id,Request $request, EntityManagerInterface $em){
+    public function modifierSortie($id, Request $request, EntityManagerInterface $em)
+    {
 
         $sortie = new Sorties();
         $villeRepo = $this->getDoctrine()->getRepository(Villes::class);
@@ -166,7 +202,7 @@ dump($etat);
         $sortie->setOrganisateur($user->getId());
         $sortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
         $sortie = $sortieRepo->find($id);
-        $etat=new Etats();
+        $etat = new Etats();
 
         $modifierSortieForm = $this->createForm(ModifierSortieType::class, $sortie);
         $modifierSortieForm->handleRequest($request);
@@ -184,7 +220,7 @@ dump($etat);
         if ($modifierSortieForm->get('Enregistrer')->isClicked()) {
             $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
             $etat = $etatRepo->find(3);
-            $sortie->setEtatSortie($etat);
+            $sortie->setSortieEtat($etat);
             if ($modifierSortieForm->isSubmitted() && $modifierSortieForm->isValid()) {
 
                 $em->persist($sortie);
@@ -193,18 +229,19 @@ dump($etat);
                 return $this->redirectToRoute("home");
             }
         }
-        if($modifierSortieForm->get('Publier')->isClicked()){
+        if ($modifierSortieForm->get('Publier')->isClicked()) {
             $etatRepo = $this->getDoctrine()->getRepository(Etats::class);
             $etat = $etatRepo->find(4);
-            $sortie->setEtatSortie($etat);
+            $sortie->setSortieEtat($etat);
             if ($modifierSortieForm->isSubmitted() && $modifierSortieForm->isValid()) {
 
                 $em->persist($sortie);
                 $em->flush();
                 $this->addFlash("success", "Modification réussie");
                 return $this->redirectToRoute("home");
-            }}
+            }
+        }
 
-        return $this->render('sortie/modifier_sortie.html.twig', ['sortie' => $sortie,'modifierSortieForm'=>$modifierSortieForm->createView(), "site" => $nomSite, 'villes' => $villes]);
+        return $this->render('sortie/modifier_sortie.html.twig', ['sortie' => $sortie, 'modifierSortieForm' => $modifierSortieForm->createView(), "site" => $nomSite, 'villes' => $villes]);
     }
 }

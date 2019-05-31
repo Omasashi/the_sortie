@@ -8,7 +8,7 @@
                 <div class="marge-bottom col-md-4 offset-md-8">Paticipant : {{ user.prenom }}</div>
             </div>
 
-            <div class="marge-bottom row container"><h4>filtrer les sorties</h4></div>
+            <div class="marge-bottom row container"><h3>Filtrer les sorties</h3></div>
             <form action="{{ path('home') }} " method="get">
 
                 <div class="row">
@@ -82,17 +82,22 @@
                                 <td>{{ sortie.dateCloture |date('d/m/Y') }}</td>
                                 <td>{{ sortie.sortieIncription |length }}/{{ sortie.maxInscriptions }}</td>
                                 <td>{{ sortie.sortieEtat.libelle }}</td>
-                                <td>
-                                        {% for st in sortie.sortieIncription %}
-                                    {% if st.paritcipant==(app.User) %}
-                                        <h4 class="text-center"><strong> X</strong></h4>
+                                <td> {% for inst in sortie.sortieIncription %}
+                                    {% if sortie.id == inst.sortie.id and inst.paritcipant==(app.user) %}
 
+                                        <h4 class="text-center"><strong> X</strong></h4>
+                                        <a href="{{ path('desisterSortie',{'id':sortie.id}) }}"> Se désister</a>
                                     {% else %}
-                                        <strong><u>Vous n'êtes pas
-                                                inscris. <br>{% if sortie.sortieIncription |length >=sortie.maxInscriptions and sortie.dateCloture > "now"|date()%}
-                                            {% else %}<a href="{{ path('inscriptionSortie',{'id':sortie.id}) }}">Inscrivez vous </a>{% endif %}</u></strong>
+                                        <strong>Vous n'êtes pas
+                                                inscris. <br>{% if sortie.sortieIncription |length < sortie.maxInscriptions and sortie.dateCloture < "now"|date()%}
+                                            {% else %}<u><a href="{{ path('inscriptionSortie',{'id':sortie.id}) }}">Inscrivez vous </a></u></strong>{% endif %}
                                     {% endif %}
-                                {% endfor %}</td>
+                                    {% endfor %}
+                                    {% if (sortie.sortieIncription |length) == ins %}
+                                        <strong>Vous n'êtes pas
+                                        inscris. <br>{% if sortie.sortieIncription |length < sortie.maxInscriptions and sortie.dateCloture < "now"|date()%}
+                                    {% else %}<u><a href="{{ path('inscriptionSortie',{'id':sortie.id}) }}">Inscrivez vous </a></u></strong>{% endif %}
+                                    {% endif %}</td>
                                 <td>{{ sortie.sortieParticipant.pseudo }}</td>
                                 <td><a href="{{ path('afficheSortie',{'id':sortie.id}) }}">Afficher </a><br>
                                     {% if sortie.organisateur==(app.User.id) %}

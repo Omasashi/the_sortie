@@ -1,0 +1,56 @@
+{% extends ('layout.html.twig') %}
+ {% block title %}{{ parent() }} Désinscription Sortie{% endblock %}
+{% block main %}
+ <div class="marge-bottom marge-top DIV text-white container">
+  <h3 class="text-center">Desinscription</h3>
+  <div CLASS="marge-bottom row">
+   <div class="col-2"><label for="">Nom de la sortie :</label></div>
+   <div class="col-2">{{ sortie.nom }}</div>
+   <div class="col-2  offset-md-1">Ville organissation :</div>
+   <div class="col-2">{{ sortie.sortieSite.nomSite }}</div>
+  </div>
+  <div CLASS="marge-bottom row">
+   <div class="col-2">Date et heure de la sortie :</div>
+   <div class="col-2">{{ sortie.dateDebut |date('d/m/Y') }}</div>
+   <div class="col-2  offset-md-1">Lieu :</div>
+   <div class="col-2">{{ sortie.sortie.nomLieu }}</div>
+  </div>
+  <div CLASS="marge-bottom row">
+   <div class="col-2">Date limite de l'inscription</div>
+   <div class="col-2">{{ sortie.dateCloture |date('d/m/Y')}}</div>
+   <div class="col-2  offset-md-1">Rue</div>
+   <div class="col-2">{{ sortie.sortie.rue }}</div>
+  </div>
+  <div CLASS="marge-bottom row">
+   <div class="col-2">Nombre de places :</div>
+   <div class="col-2">{{ sortie.maxInscriptions }}</div>
+   <div class="col-2  offset-md-1"Code postal :></div>
+   <div class="col-2"></div>
+  </div>
+  <div CLASS="marge-bottom row">
+   <div class="col-2">Durée :</div>
+   <div class="col-2">{{ sortie.duree }}</div>
+   <div class="col-2  offset-md-1">Latitude :</div>
+   <div class="col-2">{{ sortie.sortie.latitude }}</div>
+  </div>
+  <div CLASS="marge-bottom row">
+   <div class="col-2">Description et info :</div>
+   <div class="col-2">{{ sortie.infosescriptions }}</div>
+   <div class="col-2  offset-md-1">Longitude :</div>
+   <div class="col-2">{{ sortie.sortie.longitude }}</div>
+  </div>
+  <div class="row marge-bottom">
+   <div class="col-2 offset-md-2">
+    <button class="btn btn-outline-primary col-12" type="reset"><a href="{{ path('home') }}">Annuler</a></button>
+   </div>
+   {% if sortie.dateCloture > "now"|date() %}
+    {{ form_start(inscriptionSortieForm) }}
+    <div class="col-2 offset-md-2">
+     {{ form_widget(inscriptionSortieForm.Enregistrer) }}
+    </div>
+    {{ form_end(inscriptionSortieForm) }}
+   {% endif %}
+  </div>
+ </div>
+
+{% endblock %}

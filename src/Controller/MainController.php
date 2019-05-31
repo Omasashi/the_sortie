@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 
+use App\Entity\Etats;
+use App\Entity\Inscriptions;
 use App\Entity\Sites;
 use App\Entity\Sorties;
 use App\Form\SitesType;
@@ -28,7 +30,6 @@ class MainController extends Controller
         $siterecherche="";
         $dateDebut="";
         $dateFin="";
-
         $rechercheSortieRepo = $this->getDoctrine()->getRepository(Sorties::class);
         $recherche = $request->query->all();
         if (isset($recherche['organisateur']) && $recherche['organisateur'] == 'on') {
@@ -56,8 +57,6 @@ class MainController extends Controller
         $rechercheSortie = $rechercheSortieRepo->recherche($like, $organisateur, $etat,$inscrit,$pasInscrit,$siterecherche,$dateDebut,$dateFin);
 
 
-
-
         $recherche = $request->query->all();
         $sites1 = new Sites();
         $sitesRepo = $this->getDoctrine()->getRepository(Sites::class);
@@ -73,6 +72,7 @@ class MainController extends Controller
            dump($tit->getParitcipant() );
         }
 
-        return $this->render("main/home.html.twig", ['date' => $date, 'user' => $user, 'sites' => $sites, 'sitesForm' => $sitesForm, 'sorties' => $rechercheSortie]);
+        $inscript=0;
+        return $this->render("main/home.html.twig", ['date' => $date, 'user' => $user, 'sites' => $sites, 'sitesForm' => $sitesForm, 'sorties' => $rechercheSortie,'ins'=>$inscript]);
     }
 }

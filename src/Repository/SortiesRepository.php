@@ -37,11 +37,13 @@ class SortiesRepository extends ServiceEntityRepository
             $qb->setParameter('etat', $etat);
         }
         if (isset($inscrit) && $inscrit != "" && $inscrit != null) {
-            $qb->andWhere('s.sortieParticipant =:inscrit');
+            $qb->join('s.sortieIncription','i');
+            $qb->andWhere('i.paritcipant =:inscrit');
             $qb->setParameter('inscrit', $inscrit);
         }
         if (isset($pasInscrit) && $pasInscrit != "" && $pasInscrit != null) {
-            $qb->andWhere('s.sortieParticipant !=:pasInscrit');
+            $qb->join('s.sortieIncription','i');
+            $qb->andWhere('i.paritcipant !=:pasInscrit');
             $qb->setParameter('pasInscrit', $pasInscrit);
         }
         if (isset($sortieSite) && $sortieSite != "" && $sortieSite != null) {
@@ -79,15 +81,17 @@ class SortiesRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Sorties
+
+    public function findSortieNonInscritOrganisteur($user): ?Sorties
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
+            ->join('s.sortieIncription','i')
+            ->andWhere('s.organisateur = :val')
+            ->andWhere('i.paritcipant!=:val')
+            ->setParameter('val', $user)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
 }

@@ -209,33 +209,17 @@ class Sorties
     /**
      * @return mixed
      */
-    public function getInfosDescriptions()
+    public function getMotif()
     {
-        return $this->infosDescriptions;
+        return $this->motif;
     }
 
     /**
-     * @param mixed $infosDescriptions
+     * @param mixed $motif
      */
-    public function setInfosDescriptions($infosDescriptions)
+    public function setMotif($motif)
     {
-        $this->infosDescriptions = $infosDescriptions;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEtatSortie()
-    {
-        return $this->etatSortie;
-    }
-
-    /**
-     * @param mixed $etatSortie
-     */
-    public function setEtatSortie($etatSortie)
-    {
-        $this->etatSortie = $etatSortie;
+        $this->motif = $motif;
     }
 
     /**
@@ -337,53 +321,17 @@ class Sorties
     /**
      * @return mixed
      */
-    public function getMotif()
-    {
-        return $this->motif;
-    }
-
-    /**
-     * @param mixed $motif
-     */
-    public function setMotif($motif)
-    {
-        $this->motif = $motif;
-    }
-
-
-
-    public function addSortieIncription(Inscriptions $sortieIncription): self
-    {
-        if (!$this->sortieIncription->contains($sortieIncription)) {
-            $this->sortieIncription[] = $sortieIncription;
-            $sortieIncription->setSortie($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSortieIncription(Inscriptions $sortieIncription): self
-    {
-        if ($this->sortieIncription->contains($sortieIncription)) {
-            $this->sortieIncription->removeElement($sortieIncription);
-            // set the owning side to null (unless already changed)
-            if ($sortieIncription->getSortie() === $this) {
-                $sortieIncription->setSortie(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getSortieParticipant(): ?Participants
+    public function getSortieParticipant()
     {
         return $this->sortieParticipant;
     }
 
-    public function setSortieParticipant(?Participants $sortieParticipant): self
+    /**
+     * @param mixed $sortieParticipant
+     */
+    public function setSortieParticipant($sortieParticipant)
     {
         $this->sortieParticipant = $sortieParticipant;
-
-        return $this;
     }
-}
+
+    }
